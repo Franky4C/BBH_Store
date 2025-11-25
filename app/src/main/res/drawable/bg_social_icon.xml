@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Fondo casi transparente -->
+    <solid android:color="#33000000" />
+
+    <!-- Borde redondo (círculo) -->
+    <corners android:radius="999dp" />
+
+    <!-- Sombra simulada con gradiente radial oscuro en el centro -->
+    <gradient
+        android:type="radial"
+        android:gradientRadius="40dp"
+        android:centerColor="#66000000"
+        android:endColor="@android:color/transparent" />
+
+    <padding
+        android:left="6dp"
+        android:top="6dp"
+        android:right="6dp"
+        android:bottom="6dp" />
+</shape>

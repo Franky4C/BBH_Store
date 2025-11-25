@@ -202,32 +202,36 @@
             <!-- Convertidos a ImageButton para el efecto visual -->
             <ImageButton
                 android:id="@+id/iconInstagram"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_social_icon"
                 android:contentDescription="Instagram"
-                android:padding="4dp"
+                android:padding="8dp"
+                android:alpha="0.9"
                 android:src="@drawable/instagran_logo" />
 
             <ImageButton
                 android:id="@+id/iconFacebook"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/bg_social_icon"
                 android:contentDescription="Facebook"
-                android:padding="4dp"
+                android:padding="8dp"
+                android:alpha="0.9"
                 android:src="@drawable/facebool" />
 
             <ImageButton
                 android:id="@+id/iconWhatsapp"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_social_icon"
                 android:contentDescription="Whatsapp"
-                android:padding="4dp"
+                android:padding="8dp"
+                android:alpha="0.9"
                 android:src="@drawable/whatsapp_tile_logo_icon_169898" />
+
 
         </LinearLayout>
     </LinearLayout>
