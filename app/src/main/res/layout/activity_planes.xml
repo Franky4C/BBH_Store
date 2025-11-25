@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#191919"
@@ -17,17 +17,10 @@
         <!-- ====================================================== -->
         <!-- ============ SECCIÓN DE TÍTULO Y RETROCESO =========== -->
         <!-- ====================================================== -->
-        <?xml version="1.0" encoding="utf-8"?>
         <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#191919"
-            android:padding="16dp"
-            tools:context=".Planes">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
 
             <!-- BOTÓN DE REGRESO CON EL ID CORRECTO -->
             <ImageButton
@@ -35,7 +28,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Regresar al menú principal"
                 android:src="@drawable/icon_04"
@@ -46,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Planes Disponibles\n(Próximamente)"
+                android:text="Planes Disponibles"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -54,26 +47,22 @@
 
         </RelativeLayout>
 
-
-
         <!-- ====================================================== -->
-        <!-- ============ TARJETA CON TEXTO SOBRE IMAGEN ============ -->
+        <!-- ============ TARJETA PLAN GENERAL ============ -->
         <!-- ====================================================== -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="350dp"
+            android:layout_marginBottom="16dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="8dp"
             app:strokeWidth="1dp"
             app:strokeColor="#33FFFFFF"
             app:cardBackgroundColor="#212121">
 
-            <!-- El resto de tu código de la tarjeta va aquí... (sin cambios) -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <!-- ... Tu ImageView, View, y LinearLayout con el contenido ... -->
-
                 <!-- 1. LA IMAGEN DE FONDO -->
                 <ImageView
                     android:layout_width="match_parent"
@@ -85,8 +74,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/gradient_overlay"
-                    />
+                    android:background="@drawable/gradient_overlay" />
                 <!-- 3. EL CONTENIDO FLOTANTE -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -149,38 +137,34 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:background="#111111"
                         android:paddingTop="12dp"
                         android:paddingBottom="12dp"
                         android:text="Comprar Paquete"
                         android:textStyle="bold"
                         android:textSize="16sp"
                         app:backgroundTint="#4CAF59"
-                        app:cornerRadius="8dp"
-                        android:alpha=".7"/>
+                        app:cornerRadius="8dp" />
                 </LinearLayout>
 
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <!-- ====================================================== -->
-        <!-- ============ TARJETA CON TEXTO SOBRE IMAGEN ============ -->
+        <!-- ============ TARJETA PLAN ESTUDIANTES ============ -->
         <!-- ====================================================== -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="350dp"
+            android:layout_marginBottom="16dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="8dp"
             app:strokeWidth="1dp"
             app:strokeColor="#33FFFFFF"
             app:cardBackgroundColor="#212121">
 
-            <!-- El resto de tu código de la tarjeta va aquí... (sin cambios) -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <!-- ... Tu ImageView, View, y LinearLayout con el contenido ... -->
-
                 <!-- 1. LA IMAGEN DE FONDO -->
                 <ImageView
                     android:layout_width="match_parent"
@@ -255,21 +239,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:background="#111111"
                         android:paddingTop="12dp"
                         android:paddingBottom="12dp"
                         android:text="Comprar Paquete"
                         android:textStyle="bold"
                         android:textSize="16sp"
                         app:backgroundTint="#4CAF50"
-                        app:cornerRadius="8dp"
-                        android:alpha=".7"/>
+                        app:cornerRadius="8dp"/>
                 </LinearLayout>
 
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
-        <!-- ====================================================== -->
 
+        <!-- ====================================================== -->
+        <!-- ============ TARJETA PLAN 8 DIAS ============ -->
+        <!-- ====================================================== -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="350dp"
@@ -279,12 +263,9 @@
             app:strokeColor="#33FFFFFF"
             app:cardBackgroundColor="#212121">
 
-            <!-- El resto de tu código de la tarjeta va aquí... (sin cambios) -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <!-- ... Tu ImageView, View, y LinearLayout con el contenido ... -->
-
                 <!-- 1. LA IMAGEN DE FONDO -->
                 <ImageView
                     android:layout_width="match_parent"
@@ -340,12 +321,12 @@
                             android:shadowRadius="3"/>
 
                     </RelativeLayout>
-                    <!-- LISTA DE BENEFICIOS -->
+                    <!-- LISTA DE BENEFICIOS (aquí puedes ajustar los beneficios) -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="6dp"
-                        android:text="• Personal Training\n• Body Building\n• Cardio\n• Clases Personalizadas"
+                        android:text="• Acceso 8 días al mes\n• Body Building\n• Cardio"
                         android:textColor="#E0E0E0"
                         android:textSize="15sp"
                         android:shadowColor="#000000"
@@ -354,23 +335,22 @@
                         android:shadowRadius="2"/>
                     <!-- BOTÓN DE COMPRA -->
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnComprarDias"
+                        android:id="@+id/btnComprar8Dias"
                         style="@style/Widget.Material3.Button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:background="#111111"
                         android:paddingTop="12dp"
                         android:paddingBottom="12dp"
                         android:text="Comprar Paquete"
                         android:textStyle="bold"
                         android:textSize="16sp"
                         app:backgroundTint="#4CAF50"
-                        app:cornerRadius="8dp"
-                        android:alpha=".7"/>
+                        app:cornerRadius="8dp"/>
                 </LinearLayout>
 
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
+
     </LinearLayout>
 </ScrollView>
