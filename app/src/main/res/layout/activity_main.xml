@@ -21,7 +21,7 @@
         <ImageView
             android:id="@+id/imgLogoInicio"
             android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:src="@drawable/logo"
             android:contentDescription="Logo de la aplicación" />
@@ -31,19 +31,22 @@
             android:id="@+id/txtMotivacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="24dp"
             android:text="No te quedes quieto"
             android:textColor="#A8A8A8"
-            android:textSize="20sp" />
+            android:textSize="25dp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/txtBoxea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:text="¡Boxea!"
             android:textColor="#8AFF8E"
-            android:textSize="24sp"
+            android:textSize="28dp"
             android:textStyle="bold"/>
 
         <!-- Botón Tienda (MEJORADO) -->
@@ -56,13 +59,17 @@
                 android:id="@+id/btnTienda"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackground"
+                android:background="@android:color/transparent"
                 android:contentDescription="Ir a la Tienda"
                 android:scaleType="centerCrop"
                 android:src="@drawable/pexels_pavel_danilyuk_6296117"
-                android:alpha=".65"/>
+                android:alpha="0.85"/>
 
-            <!-- Texto sobrepuesto -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/overlay_button_shadow" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,11 +95,16 @@
                 android:id="@+id/btnPlanes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackground"
+                android:background="@android:color/transparent"
                 android:contentDescription="Ver Planes"
                 android:scaleType="centerCrop"
-                android:src="@drawable/pexels_glebkrs_2628206"
-                android:alpha=".65"/>
+                android:src="@drawable/pexels_cristian_rojas_8809988"
+                android:alpha="0.85"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/overlay_button_shadow" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -119,11 +131,15 @@
                 android:id="@+id/btnTorneo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackground"
+                android:background="@android:color/transparent"
                 android:contentDescription="Ver Torneos"
                 android:scaleType="centerCrop"
                 android:src="@drawable/pexels_franco_monsalvo_252430633_26891610"
-                android:alpha=".65"/>
+                android:alpha="0.85"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/overlay_button_shadow" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -148,7 +164,9 @@
             android:layout_marginTop="32dp"
             android:text="Horarios:"
             android:textColor="#A8A8A8"
-            android:textSize="20sp" />
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
 
         <TextView
             android:id="@+id/txtDias"
@@ -158,7 +176,8 @@
             android:lineSpacingExtra="4dp"
             android:text="Lunes - Viernes 6:00 AM - 10:00 PM\nSábado y Domingo 7:00 AM - 4:00 PM"
             android:textColor="#A8A8A8"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_gravity="center"/>
 
         <TextView
             android:id="@+id/Invitacion"
@@ -168,7 +187,8 @@
             android:layout_marginTop="24dp"
             android:text="¡Ven a entrenar con nosotros!"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
         <!-- Redes Sociales (MEJORADO) -->
         <LinearLayout
