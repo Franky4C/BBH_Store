@@ -1,19 +1,24 @@
-package mx.tecnm.cdhidalgo.tiendaregalos
+package mx.tecnm.cdhidalgo.bbhstore
 
+import android.widget.Toast
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
+import com.google.firebase.auth.FirebaseAuth
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.ItemOrden
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.Orden
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.CarritoManager
-import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.Producto
-import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.Usuario
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.CarritoManager
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.Producto
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.Usuario
 
 class DetalleProducto : AppCompatActivity() {
 
@@ -27,7 +32,7 @@ class DetalleProducto : AppCompatActivity() {
     private lateinit var precioProducto: TextView
     private lateinit var btnComprar: Button
     private lateinit var btnAgregarCarrito: Button
-
+    private val db = Firebase.firestore
     private var usuario: Usuario? = null
     private var producto: Producto? = null
 
@@ -83,28 +88,50 @@ class DetalleProducto : AppCompatActivity() {
             }
         }
 
-        // Botón COMPRAR: compra rápida solo de ESTE producto
+        // Botón COMPRAR
         btnComprar.setOnClickListener {
             val prod = producto ?: return@setOnClickListener
 
-            // Opcional: validar stock
-            if (prod.stock <= 0) {
-                Toast.makeText(this, "Sin stock suficiente", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+            // Validar stock si lo manejas en Producto
+            // if (prod.stock <= 0) { ... }  // solo si tienes ese campo
 
-            // Generar ID de compra (mismo formato que en CarritoActivity)
             val idCompra = "ORD-" + System.currentTimeMillis().toString()
+            val cantidad = 1
+            val total = prod.precio * cantidad
+            val correoUsuario = usuario?.correo ?: FirebaseAuth.getInstance().currentUser?.email
 
-            // Total = precio de este producto (1 unidad)
-            val total = prod.precio
+            val itemOrden = ItemOrden(
+                nombre = prod.nombre,
+                nombreCorto = prod.nombreCorto,
+                categoria = prod.categoria,
+                precioUnitario = prod.precio,
+                cantidad = cantidad,
+                subtotal = total
+            )
 
-            // Ir a la pantalla de confirmación directamente
-            val intent = Intent(this, CompraConfirmadaActivity::class.java)
-            intent.putExtra("orden_id", idCompra)
-            intent.putExtra("orden_total", total)
-            startActivity(intent)
+            val orden = Orden(
+                idCompra = idCompra,
+                fecha = System.currentTimeMillis(),
+                usuarioCorreo = correoUsuario,
+                items = listOf(itemOrden),
+                total = total
+            )
+
+            db.collection("bbh_ordenes")
+                .document(orden.idCompra)
+                .set(orden)
+
+                .addOnSuccessListener {
+                    val intent = Intent(this, CompraConfirmadaActivity::class.java)
+                    intent.putExtra("orden_id", orden.idCompra)
+                    intent.putExtra("orden_total", orden.total)
+                    startActivity(intent)
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error al guardar la orden: ${e.message}", Toast.LENGTH_LONG).show()
+                }
         }
+
 
         // Icono de carrito: abrir pantalla de carrito
         btnCarrito.setOnClickListener {

@@ -1,4 +1,4 @@
-package mx.tecnm.cdhidalgo.tiendaregalos
+package mx.tecnm.cdhidalgo.bbhstore
 
 import org.junit.Test
 

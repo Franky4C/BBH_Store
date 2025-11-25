@@ -1,13 +1,109 @@
 {
   "project_info": {
-    "project_number": "40422098483",
-    "project_id": "tiendaregalos-1653d",
-    "storage_bucket": "tiendaregalos-1653d.firebasestorage.app"
+    "project_number": "686968380083",
+    "firebase_url": "https://gift-store-6132e-default-rtdb.firebaseio.com",
+    "project_id": "gift-store-6132e",
+    "storage_bucket": "gift-store-6132e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:40422098483:android:ad14a8632d27a92d120546",
+        "mobilesdk_app_id": "1:686968380083:android:539e0192b85e411a0d6ec6",
+        "android_client_info": {
+          "package_name": "mx.tecnm.cdhidalgo.bbhstore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4UNgajxwAazrBBMsRoYw-xcsoSKJ6KKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686968380083:android:3aedcfa75a2bd5620d6ec6",
+        "android_client_info": {
+          "package_name": "mx.tecnm.cdhidalgo.e401_2024"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4UNgajxwAazrBBMsRoYw-xcsoSKJ6KKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686968380083:android:a46724b56bee29140d6ec6",
+        "android_client_info": {
+          "package_name": "mx.tecnm.cdhidalgo.giftstore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4UNgajxwAazrBBMsRoYw-xcsoSKJ6KKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686968380083:android:42a857c999c889760d6ec6",
+        "android_client_info": {
+          "package_name": "mx.tecnm.cdhidalgo.materialessoto"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4UNgajxwAazrBBMsRoYw-xcsoSKJ6KKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686968380083:android:0ce134a59e2377230d6ec6",
+        "android_client_info": {
+          "package_name": "mx.tecnm.cdhidalgo.tienda"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4UNgajxwAazrBBMsRoYw-xcsoSKJ6KKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686968380083:android:032a6868416654800d6ec6",
         "android_client_info": {
           "package_name": "mx.tecnm.cdhidalgo.tiendaregalos"
         }
@@ -15,7 +111,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB1DlN16uwb1S-NhNTbK2PJJ_zjUvbbXjU"
+          "current_key": "AIzaSyD4UNgajxwAazrBBMsRoYw-xcsoSKJ6KKU"
         }
       ],
       "services": {

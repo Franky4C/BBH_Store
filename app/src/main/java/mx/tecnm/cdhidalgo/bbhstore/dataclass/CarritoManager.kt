@@ -1,4 +1,4 @@
-package mx.tecnm.cdhidalgo.tiendaregalos.dataclass
+package mx.tecnm.cdhidalgo.bbhstore.dataclass
 
 object CarritoManager {
 

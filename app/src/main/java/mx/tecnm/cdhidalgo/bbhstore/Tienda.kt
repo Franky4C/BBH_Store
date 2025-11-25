@@ -1,4 +1,4 @@
-package mx.tecnm.cdhidalgo.tiendaregalos
+package mx.tecnm.cdhidalgo.bbhstore
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,10 +11,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import mx.tecnm.cdhidalgo.tiendaregalos.adaptadores.AdaptadorArtesania
-import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.CarritoManager
-import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.Producto
-import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.Usuario
+import mx.tecnm.cdhidalgo.bbhstore.adaptadores.AdaptadorArtesania
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.CarritoManager
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.Producto
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.Usuario
 
 class Tienda : AppCompatActivity() {
 
@@ -117,6 +117,7 @@ class Tienda : AppCompatActivity() {
         contadorCarrito.text = total.toString()
     }
 
+
     private fun cargarDatosDeEjemplo() {
         listaArtesanias = ArrayList()
         listaArtesanias.add(
@@ -142,4 +143,12 @@ class Tienda : AppCompatActivity() {
             )
         )
     }
+
+    override fun onResume() {
+        super.onResume()
+        // Cada vez que regreses a Tienda (desde Carrito o CompraConfirmada)
+        // se recalcula el número del carrito
+        actualizarContadorCarrito()
+    }
+
 }

@@ -1,4 +1,4 @@
-package mx.tecnm.cdhidalgo.tiendaregalos
+package mx.tecnm.cdhidalgo.bbhstore
 
 import android.content.Intent
 import android.net.Uri
@@ -14,7 +14,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
-import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.Usuario
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.Usuario
 
 class Login : AppCompatActivity() {
 

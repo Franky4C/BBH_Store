@@ -1,4 +1,4 @@
-package mx.tecnm.cdhidalgo.tiendaregalos.adaptadores
+package mx.tecnm.cdhidalgo.bbhstore.adaptadores
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import mx.tecnm.cdhidalgo.tiendaregalos.R
-import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.CarritoManager
+import mx.tecnm.cdhidalgo.bbhstore.R
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.CarritoManager
 
 class AdaptadorCarrito :
     RecyclerView.Adapter<AdaptadorCarrito.CarritoViewHolder>() {

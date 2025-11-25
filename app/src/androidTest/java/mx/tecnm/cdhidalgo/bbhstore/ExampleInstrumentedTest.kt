@@ -1,4 +1,4 @@
-package mx.tecnm.cdhidalgo.tiendaregalos
+package mx.tecnm.cdhidalgo.bbhstore
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("mx.tecnm.cdhidalgo.tiendaregalos", appContext.packageName)
+        assertEquals("mx.tecnm.cdhidalgo.bbhstore", appContext.packageName)
     }
 }

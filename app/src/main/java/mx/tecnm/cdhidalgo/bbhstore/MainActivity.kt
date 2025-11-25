@@ -1,4 +1,4 @@
-package mx.tecnm.cdhidalgo.tiendaregalos
+package mx.tecnm.cdhidalgo.bbhstore
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 // 1. IMPORTA LA CLASE 'Usuario' PARA QUE LA ACTIVIDAD SEPA QUÉ ES
-import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.Usuario
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.Usuario
 
 class MainActivity : AppCompatActivity() {
 

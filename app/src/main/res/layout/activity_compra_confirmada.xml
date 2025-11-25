@@ -1,62 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
     android:gravity="center"
+    android:padding="16dp"
     android:background="#121212">
 
-    <TextView
-        android:id="@+id/txt_titulo_confirmacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Compra realizada"
-        android:textColor="@android:color/white"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp" />
-
-    <TextView
-        android:id="@+id/txt_mensaje_confirmacion"
+    <!-- Tarjeta centrada con bordes redondeados -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Presenta este ID de compra para recoger tu pedido en tienda:"
-        android:textColor="#C5C3C3"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="24dp"
+        app:cardCornerRadius="16dp"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="#1E1E1E">
 
-    <TextView
-        android:id="@+id/txt_id_compra"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ORD-123456"
-        android:textColor="#8AFF8E"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="24dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
 
-    <TextView
-        android:id="@+id/txt_total_compra"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="$0.00"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="32dp" />
+            <TextView
+                android:id="@+id/txt_titulo_confirmacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Compra realizada"
+                android:textColor="@android:color/white"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="12dp" />
 
-    <Button
-        android:id="@+id/btn_volver_tienda"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Volver"
-        android:textAllCaps="false"
-        android:backgroundTint="#0091EA"
-        android:textColor="@android:color/white" />
+            <TextView
+                android:id="@+id/txt_mensaje_confirmacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Presenta este ID de compra para recoger tu pedido en tienda:"
+                android:textColor="#C5C3C3"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Separador sutil -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#303030"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:id="@+id/txt_id_compra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ORD-123456"
+                android:textColor="#8AFF8E"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:id="@+id/txt_total_compra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="$0.00"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:id="@+id/txt_correo_compra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comprador: ---"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/txt_fecha_compra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fecha: --/--/---- --:--"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:id="@+id/txt_resumen_titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Resumen de la compra:"
+                android:textColor="#C5C3C3"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/txt_resumen_compra"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1 x Producto A - $100.00"
+                android:textColor="#E0E0E0"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="24dp" />
+
+            <Button
+                android:id="@+id/btn_volver_tienda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Volver"
+                android:textAllCaps="false"
+                android:backgroundTint="#0091EA"
+                android:textColor="@android:color/white"
+                android:paddingVertical="10dp" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

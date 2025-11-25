@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="mx.tecnm.cdhidalgo.tiendaregalos" />
-                  <option name="mobileSdkAppId" value="1:40422098483:android:ad14a8632d27a92d120546" />
-                  <option name="projectId" value="tiendaregalos-1653d" />
-                  <option name="projectNumber" value="40422098483" />
+                  <option name="appId" value="mx.tecnm.cdhidalgo.bbhstore" />
+                  <option name="mobileSdkAppId" value="1:686968380083:android:539e0192b85e411a0d6ec6" />
+                  <option name="projectId" value="gift-store-6132e" />
+                  <option name="projectNumber" value="686968380083" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

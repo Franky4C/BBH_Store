@@ -1,4 +1,4 @@
-package mx.tecnm.cdhidalgo.tiendaregalos
+package mx.tecnm.cdhidalgo.bbhstore
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
-import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.Usuario
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.Usuario
 
 class ConfirmarRegistro : AppCompatActivity() {
 

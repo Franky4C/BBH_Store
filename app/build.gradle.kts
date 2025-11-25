@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "mx.tecnm.cdhidalgo.tiendaregalos"
+    namespace = "mx.tecnm.cdhidalgo.bbhstore"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "mx.tecnm.cdhidalgo.tiendaregalos"
+        applicationId = "mx.tecnm.cdhidalgo.bbhstore"
         minSdk = 26
         targetSdk = 36
         versionCode = 1

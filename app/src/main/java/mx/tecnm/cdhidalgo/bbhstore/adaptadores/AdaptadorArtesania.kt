@@ -1,4 +1,4 @@
-package mx.tecnm.cdhidalgo.tiendaregalos.adaptadores
+package mx.tecnm.cdhidalgo.bbhstore.adaptadores
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import mx.tecnm.cdhidalgo.tiendaregalos.R
-import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.FavoritosManager
-import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.Producto
+import mx.tecnm.cdhidalgo.bbhstore.R
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.FavoritosManager
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.Producto
 
 class AdaptadorArtesania(
     private val listaProductos: ArrayList<Producto>
