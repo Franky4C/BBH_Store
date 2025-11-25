@@ -14,13 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.firestore
 import mx.tecnm.cdhidalgo.bbhstore.adaptadores.HistorialAdapter
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.Orden
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.Usuario
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class HistorialActivity : AppCompatActivity() {
 
@@ -55,9 +53,11 @@ class HistorialActivity : AppCompatActivity() {
         correoUsuario = usuario?.correo ?: FirebaseAuth.getInstance().currentUser?.email
 
         if (correoUsuario == null) {
-            // ANTES seguramente aquí hacías finish() y por eso "te regresaba"
-            Toast.makeText(this, "No se pudo obtener el correo del usuario", Toast.LENGTH_LONG).show()
-            // NO hacemos finish(); dejamos la Activity abierta para ver el mensaje.
+            Toast.makeText(
+                this,
+                "No se pudo obtener el correo del usuario",
+                Toast.LENGTH_LONG
+            ).show()
         }
 
         rvHistorial.layoutManager = LinearLayoutManager(this)
@@ -88,7 +88,6 @@ class HistorialActivity : AppCompatActivity() {
     private fun cargarHistorial() {
         val correo = correoUsuario
         if (correo == null) {
-            // No tenemos con qué filtrar
             txtVacio.visibility = View.VISIBLE
             txtVacio.text = "No se pudo determinar el usuario para mostrar historial."
             return
@@ -96,6 +95,7 @@ class HistorialActivity : AppCompatActivity() {
 
         db.collection("bbh_ordenes")
             .whereEqualTo("usuarioCorreo", correo)
+            .orderBy("fecha", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { snapshot ->
                 if (snapshot.isEmpty) {
@@ -106,7 +106,6 @@ class HistorialActivity : AppCompatActivity() {
                 }
 
                 val lista = snapshot.toObjects(Orden::class.java)
-                    .sortedByDescending { it.fecha }
 
                 txtVacio.visibility = View.GONE
                 adaptador.actualizarDatos(lista)
