@@ -4,33 +4,33 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
 import mx.tecnm.cdhidalgo.tiendaregalos.adaptadores.AdaptadorArtesania
+import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.CarritoManager
 import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.Producto
 import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.Usuario
 
 class Tienda : AppCompatActivity() {
 
     private lateinit var btnRegresar: ImageButton
+    private lateinit var btnCarrito: ImageButton
+    private lateinit var btn_favoritos: ImageButton
     private lateinit var texto: TextView
+    private lateinit var contadorCarrito: TextView
     private lateinit var usuario: Usuario
 
     private lateinit var rvArtesanias: RecyclerView
     private lateinit var listaArtesanias: ArrayList<Producto>
     private lateinit var adaptadorArtesania: AdaptadorArtesania
 
-    // No necesitas 'auth' en esta actividad si solo regresas al menú
-    // private lateinit var auth: FirebaseAuth
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // enableEdgeToEdge() suele ser para layouts más complejos, puedes omitirlo si no lo usas
         setContentView(R.layout.activity_tienda)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -38,85 +38,108 @@ class Tienda : AppCompatActivity() {
             insets
         }
 
-        // --- INICIALIZACIÓN DE VISTAS Y DATOS ---
-
-        // Ya no se necesita 'auth = FirebaseAuth.getInstance()' aquí
-
-        // Recibir el objeto usuario de la actividad anterior es CRUCIAL
+        // Recibir usuario
         if (intent.hasExtra("usuario")) {
             usuario = intent.getParcelableExtra("usuario")!!
         } else {
-            // Si no se recibe, es un error grave. Salimos para evitar un crash.
-            // Puedes mostrar un Toast si quieres.
             finish()
-            return // Detiene la ejecución de onCreate
+            return
         }
 
         texto = findViewById(R.id.usuario_tienda)
-        btnRegresar = findViewById(R.id.btn_cerrar_sesion_tienda) // Renombrado para claridad
+        btnRegresar = findViewById(R.id.btn_cerrar_sesion_tienda)
+        btnCarrito = findViewById(R.id.btn_carrito_tienda)
+        contadorCarrito = findViewById(R.id.contador_carrito_tienda)
         rvArtesanias = findViewById(R.id.artesanias_tienda)
+        btn_favoritos = findViewById(R.id.btn_favoritos_tienda)
 
-        // --- CONFIGURACIÓN DE LA UI ---
+
         val nombreCompleto = "${usuario.nombre} ${usuario.apaterno} ${usuario.amaterno}"
         texto.text = nombreCompleto
 
-        // --- LÓGICA DEL BOTÓN "REGRESAR" (antes Cerrar Sesión) ---
-        btnRegresar.setOnClickListener {
-            // La forma CORRECTA de volver a la actividad anterior.
-            // Simplemente cierra la actividad actual (`Tienda`). Android se encarga
-            // de mostrar la actividad que estaba antes en la pila (`MainActivity`).
-            finish()
-        }
+        btnRegresar.setOnClickListener { finish() }
 
-        // --- MANEJO DEL BOTÓN "ATRÁS" DEL SISTEMA PARA EVITAR BUCLES ---
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                // Al igual que el botón de la UI, solo cerramos la actividad.
                 finish()
             }
         })
 
-        // --- CARGA DE DATOS PARA EL RECYCLERVIEW ---
         cargarDatosDeEjemplo()
 
-        // --- CONFIGURACIÓN DEL RECYCLERVIEW ---
-        rvArtesanias.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        rvArtesanias.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         rvArtesanias.setHasFixedSize(true)
         adaptadorArtesania = AdaptadorArtesania(listaArtesanias)
         rvArtesanias.adapter = adaptadorArtesania
 
-        // Navegación al hacer clic en un producto
+        // Click → Detalle
         adaptadorArtesania.onProductoClick = { producto ->
             val intent = Intent(this, DetalleProducto::class.java)
             intent.putExtra("usuario", usuario)
             intent.putExtra("producto", producto)
             startActivity(intent)
-            // NO llamamos a finish() aquí, para poder volver desde DetalleProducto a Tienda
         }
+
+        // Long click → agregar al carrito respetando stock
+        adaptadorArtesania.onProductoLongClick = { producto ->
+            val agregado = CarritoManager.agregarProducto(producto, 1)
+            if (agregado) {
+                Toast.makeText(this, "Agregado al carrito", Toast.LENGTH_SHORT).show()
+                actualizarContadorCarrito()
+            } else {
+                Toast.makeText(this, "Sin stock suficiente", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Abrir pantalla de carrito (la crearemos enseguida)
+        btnCarrito.setOnClickListener {
+            val intent = Intent(this, CarritoActivity::class.java)
+            intent.putExtra("usuario", usuario)
+            startActivity(intent)
+        }
+
+        actualizarContadorCarrito()
+
+        btn_favoritos.setOnClickListener {
+            val intent = Intent(this, FavoritosActivity::class.java)
+            intent.putExtra("usuario", usuario)
+            startActivity(intent)
+        }
+
+        actualizarContadorCarrito()
+    }
+
+
+
+    private fun actualizarContadorCarrito() {
+        val total = CarritoManager.obtenerCantidadTotal()
+        contadorCarrito.text = total.toString()
     }
 
     private fun cargarDatosDeEjemplo() {
         listaArtesanias = ArrayList()
-        listaArtesanias.add(Producto(
-            R.drawable.artesania1,
-            "Xico Hoja",
-            "Xico-Talavera Hoja",
-            3309.00,
-            "XICO es un personaje que busca generar un cambio positivo " +
-                    "a través del arte y la cultura. Respalda el talento " +
-                    "emergente y provee una plataforma comercial de impulso " +
-                    "creativo.",
-            "artesania"
-        ))
-        listaArtesanias.add(Producto(
-            R.drawable.artesania2,
-            "Xico Rojo",
-            "Xico-Piel de Alebrije Rojo",
-            2959.00,
-            "XICO es un personaje que busca generar un cambio positivo" +
-                    " a través del arte y la cultura. Respalda el talento emergente" +
-                    " y provee una plataforma comercial de impulso creativo.",
-            "artesania"
-        ))
+        listaArtesanias.add(
+            Producto(
+                R.drawable.artesania1,
+                "Xico Hoja",
+                "Xico-Talavera Hoja",
+                3309.00,
+                "XICO es un personaje que busca generar un cambio positivo a través del arte...",
+                "artesania",
+                stock = 10  // NUEVO
+            )
+        )
+        listaArtesanias.add(
+            Producto(
+                R.drawable.artesania2,
+                "Xico Rojo",
+                "Xico-Piel de Alebrije Rojo",
+                2959.00,
+                "XICO es un personaje que busca generar un cambio positivo a través del arte...",
+                "artesania",
+                stock = 10   // NUEVO
+            )
+        )
     }
 }

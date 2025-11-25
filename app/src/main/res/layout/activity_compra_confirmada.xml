@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="#121212">
+
+    <TextView
+        android:id="@+id/txt_titulo_confirmacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Compra realizada"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/txt_mensaje_confirmacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Presenta este ID de compra para recoger tu pedido en tienda:"
+        android:textColor="#C5C3C3"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/txt_id_compra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ORD-123456"
+        android:textColor="#8AFF8E"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <TextView
+        android:id="@+id/txt_total_compra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="$0.00"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/btn_volver_tienda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Volver"
+        android:textAllCaps="false"
+        android:backgroundTint="#0091EA"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

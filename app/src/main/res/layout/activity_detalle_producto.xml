@@ -45,6 +45,15 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/icon_carrito"
             app:tint="@color/white" />
+        <TextView
+            android:id="@+id/contador_carrito_detalle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginStart="4dp"
+            android:gravity="center_vertical" />
     </LinearLayout>
 
     <!-- 2. SCROLLVIEW CON EL CONTENIDO PRINCIPAL -->
@@ -120,6 +129,18 @@
                 app:backgroundTint="#4CAF50"
                 app:cornerRadius="12dp"
                 android:layout_marginTop="32dp"/>
+
+            <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_agregar_carrito_detalle"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AGREGAR A CARRITO"
+            android:paddingVertical="14dp"
+            android:textSize="16sp"
+            app:backgroundTint="#4CAF50"
+            app:cornerRadius="12dp"
+            android:layout_marginTop="32dp"/>
 
         </LinearLayout>
     </ScrollView>

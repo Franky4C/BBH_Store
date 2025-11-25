@@ -6,22 +6,30 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.CarritoManager
 import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.Producto
 import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.Usuario
 
 class DetalleProducto : AppCompatActivity() {
+
     private lateinit var btnRegresar: ImageButton
     private lateinit var btnCarrito: ImageButton
+    private lateinit var contadorCarrito: TextView
     private lateinit var usuarioNombre: TextView
     private lateinit var imagenProducto: ImageView
     private lateinit var nombreProducto: TextView
     private lateinit var descripcionProducto: TextView
     private lateinit var precioProducto: TextView
     private lateinit var btnComprar: Button
+    private lateinit var btnAgregarCarrito: Button
+
+    private var usuario: Usuario? = null
+    private var producto: Producto? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,34 +41,94 @@ class DetalleProducto : AppCompatActivity() {
             insets
         }
 
+        // Referencias de UI (coinciden con tu XML)
         btnRegresar = findViewById(R.id.btn_regresar_detalle)
         btnCarrito = findViewById(R.id.btn_carrito_detalle)
-        btnComprar = findViewById(R.id.btn_comprar_detalle)
-
-        val usuario = intent.getParcelableExtra<Usuario>("usuario")
-        val producto = intent.getParcelableExtra<Producto>("producto")
-
+        contadorCarrito = findViewById(R.id.contador_carrito_detalle)
         usuarioNombre = findViewById(R.id.usuario_detalle)
+        imagenProducto = findViewById(R.id.imagen_detalle)
+        nombreProducto = findViewById(R.id.nombre_detalle)
+        descripcionProducto = findViewById(R.id.descripcion_detalle)
+        precioProducto = findViewById(R.id.precio_detalle)
+        btnComprar = findViewById(R.id.btn_comprar_detalle)
+        btnAgregarCarrito = findViewById(R.id.btn_agregar_carrito_detalle)
 
-        usuarioNombre.text = usuario?.nombre
+        // Recibir datos
+        usuario = intent.getParcelableExtra("usuario")
+        producto = intent.getParcelableExtra("producto")
 
-        if(producto != null){
-            imagenProducto = findViewById(R.id.imagen_detalle)
-            nombreProducto = findViewById(R.id.nombre_detalle)
-            descripcionProducto = findViewById(R.id.descripcion_detalle)
-            precioProducto = findViewById(R.id.precio_detalle)
-
-            imagenProducto.setImageResource(producto.imagen)
-            nombreProducto.text = producto.nombre
-            descripcionProducto.text = producto.descripcion
-            precioProducto.text = producto.precio.toString()
+        // Mostrar nombre de usuario (completo si quieres)
+        usuario?.let { u ->
+            val nombreCompleto = "${u.nombre} ${u.apaterno} ${u.amaterno}"
+            usuarioNombre.text = nombreCompleto
         }
 
-        btnRegresar.setOnClickListener {
-            val intent = Intent(this, Tienda::class.java)
-            intent.putExtra("usuario", usuario)
+        // Mostrar datos del producto
+        producto?.let { p ->
+            imagenProducto.setImageResource(p.imagen)
+            nombreProducto.text = p.nombre
+            descripcionProducto.text = p.descripcion
+            precioProducto.text = "$${p.precio}"
+        }
+
+        // Nuevo botón: AGREGAR A CARRITO
+        btnAgregarCarrito.setOnClickListener {
+            val prod = producto ?: return@setOnClickListener
+            val agregado = CarritoManager.agregarProducto(prod, 1)
+            if (agregado) {
+                Toast.makeText(this, "Agregado al carrito", Toast.LENGTH_SHORT).show()
+                actualizarContadorCarrito()
+            } else {
+                Toast.makeText(this, "Sin stock suficiente", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Botón COMPRAR: compra rápida solo de ESTE producto
+        btnComprar.setOnClickListener {
+            val prod = producto ?: return@setOnClickListener
+
+            // Opcional: validar stock
+            if (prod.stock <= 0) {
+                Toast.makeText(this, "Sin stock suficiente", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Generar ID de compra (mismo formato que en CarritoActivity)
+            val idCompra = "ORD-" + System.currentTimeMillis().toString()
+
+            // Total = precio de este producto (1 unidad)
+            val total = prod.precio
+
+            // Ir a la pantalla de confirmación directamente
+            val intent = Intent(this, CompraConfirmadaActivity::class.java)
+            intent.putExtra("orden_id", idCompra)
+            intent.putExtra("orden_total", total)
             startActivity(intent)
         }
 
+        // Icono de carrito: abrir pantalla de carrito
+        btnCarrito.setOnClickListener {
+            val intent = Intent(this, CarritoActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Flecha regresar: volver a la actividad anterior (Tienda)
+        btnRegresar.setOnClickListener {
+            finish()
+        }
+
+        // Contador inicial
+        actualizarContadorCarrito()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Por si se va al carrito y regresa a detalle
+        actualizarContadorCarrito()
+    }
+
+    private fun actualizarContadorCarrito() {
+        val total = CarritoManager.obtenerCantidadTotal()
+        contadorCarrito.text = total.toString()
     }
 }

@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TiendaRegalos">
         <activity
+            android:name=".CompraConfirmadaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FavoritosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CarritoActivity"
+            android:exported="false" />
+        <activity
             android:name=".DetalleProducto"
             android:exported="false" />
         <activity

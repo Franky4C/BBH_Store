@@ -1,40 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="200dp"
-    android:layout_height="200dp"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="200dp"
+    android:layout_height="230dp"
     android:layout_margin="10dp"
-    app:cardElevation="10dp"
-    app:cardBackgroundColor="#EAF622">
+    android:background="@android:color/transparent"
+    app:cardElevation="8dp"
+    app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="#121212">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="170dp"
-        android:layout_height="190dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp">
 
-        <LinearLayout
+        <!-- Imagen + corazón de favorito -->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="150dp">
 
             <ImageView
                 android:id="@+id/imagen_producto"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:src="@drawable/artesania1"
-                android:scaleType="centerInside"/>
-
-            <TextView
-                android:id="@+id/nombre_producto"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Xico Hoja"
-                android:layout_marginStart="10dp"
-                android:textAppearance="?attr/textAppearanceHeadline6"/>
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/artesania1" />
 
-        </LinearLayout>
+            <!-- Botón favorito -->
+            <TextView
+                android:id="@+id/btn_favorito"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="6dp"
+                android:text="♡"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_blue_bright" />
+        </FrameLayout>
 
-    </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/nombre_producto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre producto"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="8dp"
+            android:maxLines="2"
+            android:ellipsize="end" />
+
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

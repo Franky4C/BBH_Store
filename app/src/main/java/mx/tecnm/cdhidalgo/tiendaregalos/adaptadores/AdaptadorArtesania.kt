@@ -1,5 +1,6 @@
 package mx.tecnm.cdhidalgo.tiendaregalos.adaptadores
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,43 +8,71 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import mx.tecnm.cdhidalgo.tiendaregalos.R
+import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.FavoritosManager
 import mx.tecnm.cdhidalgo.tiendaregalos.dataclass.Producto
 
-class AdaptadorArtesania (private val listaProductos: ArrayList<Producto>)
-    : RecyclerView.Adapter<AdaptadorArtesania.ProductoViewHolder>()
-{
-    class ProductoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+class AdaptadorArtesania(
+    private val listaProductos: ArrayList<Producto>
+) : RecyclerView.Adapter<AdaptadorArtesania.ProductoViewHolder>() {
+
+    class ProductoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val vistaImagen: ImageView = itemView.findViewById(R.id.imagen_producto)
         val vistaNombre: TextView = itemView.findViewById(R.id.nombre_producto)
+        val btnFavorito: TextView = itemView.findViewById(R.id.btn_favorito)
     }
 
-    var onProductoClick: ((Producto)-> Unit)? = null
+    var onProductoClick: ((Producto) -> Unit)? = null
+    var onProductoLongClick: ((Producto) -> Unit)? = null
+    var onFavoritoCambiado: ((Producto, Boolean) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ProductoViewHolder {
         val vista = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_producto,parent,false)
+            .inflate(R.layout.card_producto, parent, false)
 
         return ProductoViewHolder(vista)
     }
 
-    override fun onBindViewHolder(
-        holder: ProductoViewHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: ProductoViewHolder, position: Int) {
         val producto = listaProductos[position]
+
         holder.vistaImagen.setImageResource(producto.imagen)
         holder.vistaNombre.text = producto.nombreCorto
 
+        // Estado visual de favorito
+        val esFav = FavoritosManager.esFavorito(producto)
+        aplicarEstiloFavorito(holder.btnFavorito, esFav)
+
+        // Click normal: ver detalle
         holder.itemView.setOnClickListener {
             onProductoClick?.invoke(producto)
         }
+
+        // Long click: por ejemplo agregar al carrito (ya lo tienes en Tienda)
+        holder.itemView.setOnLongClickListener {
+            onProductoLongClick?.invoke(producto)
+            true
+        }
+
+        // Click en corazón: alternar favorito
+        holder.btnFavorito.setOnClickListener {
+            val nuevoEstado = FavoritosManager.alternarFavorito(producto)
+            aplicarEstiloFavorito(holder.btnFavorito, nuevoEstado)
+            onFavoritoCambiado?.invoke(producto, nuevoEstado)
+        }
     }
 
-    override fun getItemCount(): Int {
-        return listaProductos.size
+    private fun aplicarEstiloFavorito(view: TextView, esFavorito: Boolean) {
+        if (esFavorito) {
+            view.text = "❤"
+            view.setTextColor(Color.parseColor("#c42217"))
+        } else {
+            view.text = "♡"
+            view.setTextColor(Color.WHITE)
+        }
     }
+
+    override fun getItemCount(): Int = listaProductos.size
 }
-

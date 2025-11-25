@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#121212">
+
+    <!-- Botón regresar -->
+    <ImageButton
+        android:id="@+id/btn_regresar_carrito"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/icon_04"
+        android:contentDescription="Regresar"
+        app:tint="#0091EA"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/titulo_carrito"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Carrito de compras"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_regresar_carrito"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp" />
+
+    <!-- Lista -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_carrito"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/titulo_carrito"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/contenedor_resumen" />
+
+    <!-- Resumen -->
+    <LinearLayout
+        android:id="@+id/contenedor_resumen"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="#FDF1C5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/txt_total_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Artículos: 0"
+            android:textSize="16sp"
+            android:textColor="#191919" />
+
+        <TextView
+            android:id="@+id/txt_total_importe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total: $0.00"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#c42217"
+            android:layout_marginTop="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <Button
+                android:id="@+id/btn_vaciar_carrito"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Vaciar carrito"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#c42217" />
+
+            <Button
+                android:id="@+id/btn_proceder_compra"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Proceder a compra"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#0091EA"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
