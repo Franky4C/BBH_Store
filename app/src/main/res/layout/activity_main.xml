@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 1. Añadimos el ID 'main' aquí y los xmlns que faltaban -->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#191919"
+    android:fillViewport="true"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- LOGO -->
+        <ImageView
+            android:id="@+id/imgLogoInicio"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/logo"
+            android:contentDescription="Logo de la aplicación" />
+
+        <!-- Textos de Bienvenida -->
+        <TextView
+            android:id="@+id/txtMotivacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="No te quedes quieto"
+            android:textColor="#A8A8A8"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txtBoxea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="¡Boxea!"
+            android:textColor="#8AFF8E"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+        <!-- Botón Tienda (MEJORADO) -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginTop="24dp">
+
+            <ImageButton
+                android:id="@+id/btnTienda"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="Ir a la Tienda"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pexels_pavel_danilyuk_6296117"
+                android:alpha=".65"/>
+
+            <!-- Texto sobrepuesto -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:elevation="4dp"
+                android:shadowColor="#000000"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="4"
+                android:text="Tienda"
+                android:textColor="@android:color/white"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <!-- Botón Planes (MEJORADO) -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginTop="16dp">
+
+            <ImageButton
+                android:id="@+id/btnPlanes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="Ver Planes"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pexels_glebkrs_2628206"
+                android:alpha=".65"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:elevation="4dp"
+                android:shadowColor="#000000"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="4"
+                android:text="Planes"
+                android:textColor="@android:color/white"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <!-- Botón Torneos (MEJORADO) -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginTop="16dp">
+
+            <ImageButton
+                android:id="@+id/btnTorneo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="Ver Torneos"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pexels_franco_monsalvo_252430633_26891610"
+                android:alpha=".65"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:elevation="4dp"
+                android:shadowColor="#000000"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="4"
+                android:text="Torneos"
+                android:textColor="@android:color/white"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <!-- Horarios -->
+        <TextView
+            android:id="@+id/txtHorarios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Horarios:"
+            android:textColor="#A8A8A8"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txtDias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:lineSpacingExtra="4dp"
+            android:text="Lunes - Viernes 6:00 AM - 10:00 PM\nSábado y Domingo 7:00 AM - 4:00 PM"
+            android:textColor="#A8A8A8"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/Invitacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:text="¡Ven a entrenar con nosotros!"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <!-- Redes Sociales (MEJORADO) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <!-- Convertidos a ImageButton para el efecto visual -->
+            <ImageButton
+                android:id="@+id/iconInstagram"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Instagram"
+                android:padding="4dp"
+                android:src="@drawable/instagran_logo" />
+
+            <ImageButton
+                android:id="@+id/iconFacebook"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Facebook"
+                android:padding="4dp"
+                android:src="@drawable/facebool" />
+
+            <ImageButton
+                android:id="@+id/iconWhatsapp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Whatsapp"
+                android:padding="4dp"
+                android:src="@drawable/whatsapp_tile_logo_icon_169898" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

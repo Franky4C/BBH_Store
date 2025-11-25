@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212"
+    android:fillViewport="true"
+    tools:context=".ConfirmarRegistro">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp">
+
+        <!-- 1. LOGO Y TÍTULO (SIN MÁRGENES NEGATIVOS) -->
+        <ImageView
+            android:layout_width="176dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/texto01"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="32dp"/>
+
+        <!-- 2. DATOS A CONFIRMAR (DENTRO DE UNA TARJETA) -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#212121"
+            app:cardCornerRadius="12dp"
+            app:strokeColor="#33FFFFFF"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/etiqueta_nombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="#E0E0E0"
+                    android:textAlignment="center"
+                    android:layout_marginBottom="12dp"
+                    tools:text="Etiqueta Nombre"/>
+
+                <!-- Separador visual sutil -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#44FFFFFF"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView
+                    android:id="@+id/etiqueta_credenciales"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="#C5C3C3"
+                    android:textAlignment="center"
+                    android:lineSpacingExtra="4dp"
+                    tools:text="Etiqueta Credenciales"/>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 3. BOTONES DE ACCIÓN (ESTILO MODERNO) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_confirmar_datos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/texto07"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:paddingVertical="12dp"
+            app:icon="@drawable/icon_01"
+            app:iconSize="24dp"
+            app:backgroundTint="#4CAF50"
+            app:cornerRadius="8dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginHorizontal="20dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_corregir_datos"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/texto08"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="#F44336"
+            app:strokeColor="#F44336"
+            app:icon="@drawable/icon_02"
+            app:iconTint="#F44336"
+            app:iconSize="24dp"
+            app:cornerRadius="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="20dp"/>
+
+    </LinearLayout>
+</ScrollView>

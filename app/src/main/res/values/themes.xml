@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.TiendaRegalos" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- ... otros items como colorPrimary, etc. ... -->
+
+        <!-- ESTA ES LA LÍNEA QUE DEBES AGREGAR -->
+        <item name="android:windowActivityTransitions">true</item>
+
+    </style>
+
+    <style name="Theme.TiendaRegalos" parent="Base.Theme.TiendaRegalos" />
+</resources>

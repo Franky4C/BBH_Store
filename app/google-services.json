@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "40422098483",
+    "project_id": "tiendaregalos-1653d",
+    "storage_bucket": "tiendaregalos-1653d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40422098483:android:ad14a8632d27a92d120546",
+        "android_client_info": {
+          "package_name": "mx.tecnm.cdhidalgo.tiendaregalos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1DlN16uwb1S-NhNTbK2PJJ_zjUvbbXjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

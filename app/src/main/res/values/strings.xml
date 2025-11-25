@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">TiendaRegalos</string>
+    <string name="texto01">Bienvenido!!</string>
+    <string name="texto02">Ingresar</string>
+    <string name="texto03">¿Olvidaste tu contraseña?</string>
+    <string name="texto04">¡No estoy registrado!</string>
+    <string name="texto05">Registrar</string>
+    <string name="texto06">Estoy Registrado!</string>
+    <string name="texto07">Confirmar Datos</string>
+    <string name="texto08">Corregir Datos</string>
+    <string name="texto09">Cerrar Sesión</string>
+    <string name="texto10">Recuperar Contraseña</string>
+    <string name="hint01">Correo Electrónico</string>
+    <string name="hint02">Contraseña</string>
+    <string name="hint03">Nombre</string>
+    <string name="hint04">Apellido Paterno</string>
+    <string name="hint05">Apellido Materno</string>
+</resources>
