@@ -68,7 +68,19 @@
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:padding="4dp"
-            android:contentDescription="Ver favoritos" />
+            android:contentDescription="Ver favoritos"/>
+
+        <!-- NUEVO: botón historial -->
+        <ImageButton
+            android:id="@+id/btn_historial_tienda"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/icon_historial"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:padding="4dp"
+        android:contentDescription="Ver historial de compras" />
 
     </LinearLayout>
 

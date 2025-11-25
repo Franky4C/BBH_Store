@@ -19,6 +19,14 @@
         android:gravity="center_vertical"
         android:background="@android:color/white">
 
+        <!-- CheckBox para seleccionar este ítem -->
+        <CheckBox
+            android:id="@+id/chk_seleccionado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:buttonTint="@color/black" />
+
         <!-- Imagen producto -->
         <ImageView
             android:id="@+id/img_carrito_producto"

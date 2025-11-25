@@ -29,6 +29,7 @@ class CarritoActivity : AppCompatActivity() {
     private lateinit var btnVaciar: Button
     private lateinit var btnProceder: Button
     private lateinit var btnRegresar: ImageButton
+    private lateinit var adaptador: AdaptadorCarrito      // ahora sí se usa la propiedad
 
     private val db = Firebase.firestore
     private var usuario: Usuario? = null
@@ -54,7 +55,7 @@ class CarritoActivity : AppCompatActivity() {
         btnRegresar = findViewById(R.id.btn_regresar_carrito)
 
         rvCarrito.layoutManager = LinearLayoutManager(this)
-        val adaptador = AdaptadorCarrito()
+        adaptador = AdaptadorCarrito()
         rvCarrito.adapter = adaptador
 
         adaptador.onCantidadCambiada = {
@@ -63,19 +64,26 @@ class CarritoActivity : AppCompatActivity() {
 
         btnVaciar.setOnClickListener {
             CarritoManager.vaciarCarrito()
-            rvCarrito.adapter?.notifyDataSetChanged()
+            adaptador.refrescarDatos()
             actualizarResumen()
         }
 
         btnProceder.setOnClickListener {
-            val itemsCarrito = CarritoManager.obtenerItems()
-            if (itemsCarrito.isEmpty()) {
+            // Primero, validar que haya algo en el carrito
+            if (CarritoManager.obtenerItems().isEmpty()) {
                 Toast.makeText(this, "El carrito está vacío", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Construir la lista de ItemOrden para guardar en Firestore
-            val listaItemsOrden = itemsCarrito.map { item ->
+            // Obtener solo los items seleccionados en el adapter
+            val seleccionados = adaptador.obtenerItemsSeleccionados()
+            if (seleccionados.isEmpty()) {
+                Toast.makeText(this, "Selecciona al menos un producto", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Construir la lista de ItemOrden solo con los seleccionados
+            val listaItemsOrden = seleccionados.map { item ->
                 ItemOrden(
                     nombre = item.producto.nombre,
                     nombreCorto = item.producto.nombreCorto,
@@ -87,7 +95,7 @@ class CarritoActivity : AppCompatActivity() {
             }
 
             val idCompra = "ORD-" + System.currentTimeMillis().toString()
-            val total = CarritoManager.obtenerImporteTotal()
+            val total = listaItemsOrden.sumOf { it.subtotal }
 
             // Correo del usuario: si tienes Usuario úsalo, si no agarra el de FirebaseAuth
             val correoUsuario = usuario?.correo
@@ -112,9 +120,9 @@ class CarritoActivity : AppCompatActivity() {
                 .document(orden.idCompra)
                 .set(orden)
                 .addOnSuccessListener {
-                    // Vaciar carrito solo si se guardó bien
-                    CarritoManager.vaciarCarrito()
-                    rvCarrito.adapter?.notifyDataSetChanged()
+                    // Eliminar del carrito solo los productos seleccionados
+                    CarritoManager.eliminarItems(seleccionados)
+                    adaptador.refrescarDatos()
                     actualizarResumen()
 
                     // Ir a pantalla de confirmación CON MÁS DATOS

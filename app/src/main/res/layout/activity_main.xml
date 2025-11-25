@@ -231,8 +231,6 @@
                 android:padding="8dp"
                 android:alpha="0.9"
                 android:src="@drawable/whatsapp_tile_logo_icon_169898" />
-
-
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

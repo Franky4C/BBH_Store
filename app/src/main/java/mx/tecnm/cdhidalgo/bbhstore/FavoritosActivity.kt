@@ -2,7 +2,9 @@ package mx.tecnm.cdhidalgo.bbhstore
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View          // <-- IMPORTANTE
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +22,7 @@ class FavoritosActivity : AppCompatActivity() {
 
     private lateinit var rvFavoritos: RecyclerView
     private lateinit var btnRegresar: ImageButton
+    private lateinit var txtVacio: TextView
     private var usuario: Usuario? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +39,7 @@ class FavoritosActivity : AppCompatActivity() {
 
         rvFavoritos = findViewById(R.id.rv_favoritos)
         btnRegresar = findViewById(R.id.btn_regresar_favoritos)
+        txtVacio = findViewById(R.id.txt_favoritos_vacio)
 
         rvFavoritos.layoutManager = LinearLayoutManager(this)
 
@@ -44,6 +48,9 @@ class FavoritosActivity : AppCompatActivity() {
 
         val adaptador = AdaptadorArtesania(lista)
         rvFavoritos.adapter = adaptador
+
+        // justo después de setAdapter:
+        actualizarVacio(lista)
 
         // Click: ver detalle
         adaptador.onProductoClick = { producto ->
@@ -68,11 +75,17 @@ class FavoritosActivity : AppCompatActivity() {
             if (!esFavorito) {
                 lista.remove(producto)
                 adaptador.notifyDataSetChanged()
+                actualizarVacio(lista)   // <-- aquí también
             }
         }
 
         btnRegresar.setOnClickListener {
             finish()
         }
+    }
+
+    // Función para mostrar/ocultar el mensaje de vacío
+    private fun actualizarVacio(lista: List<Producto>) {
+        txtVacio.visibility = if (lista.isEmpty()) View.VISIBLE else View.GONE
     }
 }

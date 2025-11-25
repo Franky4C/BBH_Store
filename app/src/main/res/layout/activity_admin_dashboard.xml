@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#121212"
+    android:padding="16dp">
+
+    <!-- Barra superior -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/btn_regresar_admin"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/icon_04"
+            android:contentDescription="Regresar"
+            app:tint="@android:color/white" />
+
+        <TextView
+            android:id="@+id/txt_titulo_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Dashboard de Ventas"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_subtitulo_admin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Top 2 productos más vendidos"
+        android:textColor="#8AFF8E"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Contenedor cuando no hay datos -->
+    <TextView
+        android:id="@+id/txt_sin_datos_admin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aún no hay ventas registradas."
+        android:textColor="#A8A8A8"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_marginTop="24dp"
+        android:visibility="gone" />
+
+    <!-- Card 1: producto más vendido -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_top1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:cardCornerRadius="16dp"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#1E1E1E">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/txt_top1_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Producto 1"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_top1_cantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unidades vendidas: 0"
+                android:textColor="#C5C3C3"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/txt_top1_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total vendido: $0.00"
+                android:textColor="#8AFF8E"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Card 2: segundo producto más vendido -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_top2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        app:cardCornerRadius="16dp"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#1E1E1E">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/txt_top2_nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Producto 2"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_top2_cantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unidades vendidas: 0"
+                android:textColor="#C5C3C3"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+
+            <TextView
+                android:id="@+id/txt_top2_total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total vendido: $0.00"
+                android:textColor="#8AFF8E"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

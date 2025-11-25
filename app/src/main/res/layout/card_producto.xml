@@ -39,7 +39,7 @@
                 android:textSize="18sp"
                 android:gravity="center"
                 android:textColor="@android:color/white"
-                android:background="@android:color/holo_blue_bright" />
+                android:background="@drawable/bg_favorito_circle" />
         </FrameLayout>
 
         <TextView

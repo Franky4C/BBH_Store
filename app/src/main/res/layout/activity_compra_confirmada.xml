@@ -115,6 +115,17 @@
                 android:textSize="14sp"
                 android:lineSpacingExtra="4dp"
                 android:layout_marginBottom="24dp" />
+            <!-- ... arriba ya van título, mensaje, id, total, correo, fecha, resumen ... -->
+
+            <!-- QR de la compra -->
+            <ImageView
+                android:id="@+id/img_qr_compra"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="24dp"
+                android:contentDescription="Código QR de la compra"
+                android:background="@android:color/transparent" />
 
             <Button
                 android:id="@+id/btn_volver_tienda"

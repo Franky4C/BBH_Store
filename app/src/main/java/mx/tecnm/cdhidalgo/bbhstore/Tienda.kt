@@ -21,6 +21,7 @@ class Tienda : AppCompatActivity() {
     private lateinit var btnRegresar: ImageButton
     private lateinit var btnCarrito: ImageButton
     private lateinit var btn_favoritos: ImageButton
+    private lateinit var btnHistorial: ImageButton
     private lateinit var texto: TextView
     private lateinit var contadorCarrito: TextView
     private lateinit var usuario: Usuario
@@ -52,6 +53,7 @@ class Tienda : AppCompatActivity() {
         contadorCarrito = findViewById(R.id.contador_carrito_tienda)
         rvArtesanias = findViewById(R.id.artesanias_tienda)
         btn_favoritos = findViewById(R.id.btn_favoritos_tienda)
+        btnHistorial = findViewById(R.id.btn_historial_tienda)
 
 
         val nombreCompleto = "${usuario.nombre} ${usuario.apaterno} ${usuario.amaterno}"
@@ -108,6 +110,13 @@ class Tienda : AppCompatActivity() {
         }
 
         actualizarContadorCarrito()
+
+        btnHistorial.setOnClickListener {
+            val intent = Intent(this, HistorialActivity::class.java)
+            intent.putExtra("usuario", usuario)
+            startActivity(intent)
+        }
+
     }
 
 

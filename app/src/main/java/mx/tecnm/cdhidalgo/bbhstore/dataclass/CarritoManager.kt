@@ -21,6 +21,18 @@ object CarritoManager {
     }
 
     /**
+     * Elimina del carrito solo los items que vengan en [itemsAEliminar].
+     * Se usa el nombre del producto para identificarlos, igual que en agregar/actualizar.
+     */
+    fun eliminarItems(itemsAEliminar: List<ItemCarrito>) {
+        items.removeAll { item ->
+            itemsAEliminar.any { sel ->
+                sel.producto.nombre == item.producto.nombre
+            }
+        }
+    }
+
+    /**
      * Agrega [cantidad] unidades de un producto al carrito.
      * Respeta el stock y no permite cantidades negativas.
      * Devuelve true si se pudo agregar, false si no había stock suficiente.
