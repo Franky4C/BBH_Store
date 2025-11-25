@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 1. Usamos un RelativeLayout para alinear fácilmente el botón y el texto. -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#191919"
+    android:padding="16dp"
+    tools:context=".Torneos">
+
+    <!-- 2. Botón para regresar al menú principal. -->
+    <ImageButton
+        android:id="@+id/btn_regresar_torneos"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Regresar al menú principal"
+        android:src="@drawable/icon_04"
+        app:tint="@android:color/white" />
+
+    <!-- 3. Contenedor para el texto principal, centrado en la pantalla. -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- Icono de trofeo -->
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/trophy_winner_cup_icon_231645"
+            android:layout_marginBottom="16dp"
+            app:tint="#FFD700" /> <!-- Color dorado -->
+
+        <!-- Título -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Próximos Torneos"
+            android:textColor="#8AFF8E"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <!-- Mensaje informativo -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="¡Prepárate! Anunciaremos las fechas pronto."
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+</RelativeLayout>

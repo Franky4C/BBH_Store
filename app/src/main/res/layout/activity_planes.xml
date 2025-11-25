@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#191919"
+    tools:context=".Planes">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- ====================================================== -->
+        <!-- ============ SECCIÓN DE TÍTULO Y RETROCESO =========== -->
+        <!-- ====================================================== -->
+        <?xml version="1.0" encoding="utf-8"?>
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#191919"
+            android:padding="16dp"
+            tools:context=".Planes">
+
+            <!-- BOTÓN DE REGRESO CON EL ID CORRECTO -->
+            <ImageButton
+                android:id="@+id/btn_regresar_planes"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Regresar al menú principal"
+                android:src="@drawable/icon_04"
+                app:tint="@android:color/white" />
+
+            <!-- Título de la pantalla -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Planes Disponibles\n(Próximamente)"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+
+        </RelativeLayout>
+
+
+
+        <!-- ====================================================== -->
+        <!-- ============ TARJETA CON TEXTO SOBRE IMAGEN ============ -->
+        <!-- ====================================================== -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="#33FFFFFF"
+            app:cardBackgroundColor="#212121">
+
+            <!-- El resto de tu código de la tarjeta va aquí... (sin cambios) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!-- ... Tu ImageView, View, y LinearLayout con el contenido ... -->
+
+                <!-- 1. LA IMAGEN DE FONDO -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/pexels_cristian_rojas_8809988"
+                    android:alpha=".6"/>
+                <!-- 2. EL GRADIENTE PARA LEGIBILIDAD -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_overlay"
+                    />
+                <!-- 3. EL CONTENIDO FLOTANTE -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+                    <!-- TÍTULO Y PRECIO -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:id="@+id/plan_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:text="GENERAL"
+                            android:textColor="#FFFFFF"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:shadowColor="#000000"
+                            android:shadowDx="2"
+                            android:shadowDy="2"
+                            android:shadowRadius="3"/>
+
+                        <TextView
+                            android:id="@+id/plan_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:text="$500 / MES"
+                            android:textColor="#FDF1C5"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:shadowColor="#000000"
+                            android:shadowDx="2"
+                            android:shadowDy="2"
+                            android:shadowRadius="3"/>
+
+                    </RelativeLayout>
+                    <!-- LISTA DE BENEFICIOS -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="6dp"
+                        android:text="• Personal Training\n• Body Building\n• Cardio\n• Clases Personalizadas"
+                        android:textColor="#E0E0E0"
+                        android:textSize="15sp"
+                        android:shadowColor="#000000"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"/>
+                    <!-- BOTÓN DE COMPRA -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnComprarGeneral"
+                        style="@style/Widget.Material3.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:background="#111111"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:text="Comprar Paquete"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        app:backgroundTint="#4CAF59"
+                        app:cornerRadius="8dp"
+                        android:alpha=".7"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ====================================================== -->
+        <!-- ============ TARJETA CON TEXTO SOBRE IMAGEN ============ -->
+        <!-- ====================================================== -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="#33FFFFFF"
+            app:cardBackgroundColor="#212121">
+
+            <!-- El resto de tu código de la tarjeta va aquí... (sin cambios) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!-- ... Tu ImageView, View, y LinearLayout con el contenido ... -->
+
+                <!-- 1. LA IMAGEN DE FONDO -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/pexels_sabel_blanco_662810_1544774"
+                    android:alpha=".6"/>
+                <!-- 2. EL GRADIENTE PARA LEGIBILIDAD -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_overlay" />
+                <!-- 3. EL CONTENIDO FLOTANTE -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+                    <!-- TÍTULO Y PRECIO -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:id="@+id/plan_title1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:text="ESTUDIANTES"
+                            android:textColor="#FFFFFF"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:shadowColor="#000000"
+                            android:shadowDx="2"
+                            android:shadowDy="2"
+                            android:shadowRadius="3"/>
+
+                        <TextView
+                            android:id="@+id/plan_price1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:text="$400 / MES"
+                            android:textColor="#FDF1C5FF"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:shadowColor="#000000"
+                            android:shadowDx="2"
+                            android:shadowDy="2"
+                            android:shadowRadius="3"/>
+
+                    </RelativeLayout>
+                    <!-- LISTA DE BENEFICIOS -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="6dp"
+                        android:text="• Personal Training\n• Body Building\n• Cardio\n• Clases Personalizadas"
+                        android:textColor="#E0E0E0"
+                        android:textSize="15sp"
+                        android:shadowColor="#000000"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"/>
+                    <!-- BOTÓN DE COMPRA -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnComprarEstudiantes"
+                        style="@style/Widget.Material3.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:background="#111111"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:text="Comprar Paquete"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        app:backgroundTint="#4CAF50"
+                        app:cornerRadius="8dp"
+                        android:alpha=".7"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <!-- ====================================================== -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="#33FFFFFF"
+            app:cardBackgroundColor="#212121">
+
+            <!-- El resto de tu código de la tarjeta va aquí... (sin cambios) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!-- ... Tu ImageView, View, y LinearLayout con el contenido ... -->
+
+                <!-- 1. LA IMAGEN DE FONDO -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/pexels_pavel_danilyuk_6295818"
+                    android:alpha=".6"/>
+                <!-- 2. EL GRADIENTE PARA LEGIBILIDAD -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_overlay" />
+                <!-- 3. EL CONTENIDO FLOTANTE -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+                    <!-- TÍTULO Y PRECIO -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:id="@+id/plan_title2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:text="8 DIAS AL MES"
+                            android:textColor="#FFFFFF"
+                            android:textSize="22sp"
+                            android:textStyle="bold"
+                            android:shadowColor="#000000"
+                            android:shadowDx="2"
+                            android:shadowDy="2"
+                            android:shadowRadius="3"/>
+
+                        <TextView
+                            android:id="@+id/plan_price2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:text="$310 / MES"
+                            android:textColor="#FDF1C5FF"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:shadowColor="#000000"
+                            android:shadowDx="2"
+                            android:shadowDy="2"
+                            android:shadowRadius="3"/>
+
+                    </RelativeLayout>
+                    <!-- LISTA DE BENEFICIOS -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingExtra="6dp"
+                        android:text="• Personal Training\n• Body Building\n• Cardio\n• Clases Personalizadas"
+                        android:textColor="#E0E0E0"
+                        android:textSize="15sp"
+                        android:shadowColor="#000000"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"/>
+                    <!-- BOTÓN DE COMPRA -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnComprarDias"
+                        style="@style/Widget.Material3.Button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:background="#111111"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:text="Comprar Paquete"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        app:backgroundTint="#4CAF50"
+                        app:cornerRadius="8dp"
+                        android:alpha=".7"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</ScrollView>

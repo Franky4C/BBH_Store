@@ -60,12 +60,16 @@ class MainActivity : AppCompatActivity() {
 
         // Acciones para los otros botones (funcionalidad futura)
         btnPlanes.setOnClickListener {
-            Toast.makeText(this, "La sección de Planes estará disponible próximamente.", Toast.LENGTH_SHORT).show()
-        }
+            val intent = Intent(this, Planes::class.java)
+            // 4. AHORA 'usuario' SÍ TIENE VALOR Y PODEMOS PASARLO A Tienda.kt
+            intent.putExtra("usuario", usuario)
+            startActivity(intent)        }
 
         btnTorneos.setOnClickListener {
-            Toast.makeText(this, "La sección de Torneos estará disponible próximamente.", Toast.LENGTH_SHORT).show()
-        }
+            val intent = Intent(this, Torneos::class.java)
+            // 4. AHORA 'usuario' SÍ TIENE VALOR Y PODEMOS PASARLO A Tienda.kt
+            intent.putExtra("usuario", usuario)
+            startActivity(intent)         }
 
     }
 }
