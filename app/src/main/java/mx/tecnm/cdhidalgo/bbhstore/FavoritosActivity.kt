@@ -2,10 +2,8 @@ package mx.tecnm.cdhidalgo.bbhstore
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View          // <-- IMPORTANTE
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,7 +11,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import mx.tecnm.cdhidalgo.bbhstore.adaptadores.AdaptadorArtesania
-import mx.tecnm.cdhidalgo.bbhstore.dataclass.CarritoManager
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.FavoritosManager
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.Producto
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.Usuario
@@ -21,8 +18,11 @@ import mx.tecnm.cdhidalgo.bbhstore.dataclass.Usuario
 class FavoritosActivity : AppCompatActivity() {
 
     private lateinit var rvFavoritos: RecyclerView
+    private lateinit var txtSinFavoritos: TextView
     private lateinit var btnRegresar: ImageButton
-    private lateinit var txtVacio: TextView
+
+    private lateinit var adaptador: AdaptadorArtesania
+    private val listaFavoritos = ArrayList<Producto>()
     private var usuario: Usuario? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,21 +38,15 @@ class FavoritosActivity : AppCompatActivity() {
         usuario = intent.getParcelableExtra("usuario")
 
         rvFavoritos = findViewById(R.id.rv_favoritos)
+        txtSinFavoritos = findViewById(R.id.txt_favoritos_vacio)
         btnRegresar = findViewById(R.id.btn_regresar_favoritos)
-        txtVacio = findViewById(R.id.txt_favoritos_vacio)
 
         rvFavoritos.layoutManager = LinearLayoutManager(this)
-
-        val lista = ArrayList<Producto>()
-        lista.addAll(FavoritosManager.obtenerFavoritos())
-
-        val adaptador = AdaptadorArtesania(lista)
+        adaptador = AdaptadorArtesania(listaFavoritos)
         rvFavoritos.adapter = adaptador
 
-        // justo después de setAdapter:
-        actualizarVacio(lista)
+        btnRegresar.setOnClickListener { finish() }
 
-        // Click: ver detalle
         adaptador.onProductoClick = { producto ->
             val intent = Intent(this, DetalleProducto::class.java)
             intent.putExtra("usuario", usuario)
@@ -60,32 +54,20 @@ class FavoritosActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Long click: agregar al carrito
-        adaptador.onProductoLongClick = { producto ->
-            val agregado = CarritoManager.agregarProducto(producto, 1)
-            if (agregado) {
-                Toast.makeText(this, "Agregado al carrito", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Sin stock suficiente", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        // Si desde aquí quitas un favorito con el corazón, sácalo de la lista
-        adaptador.onFavoritoCambiado = { producto, esFavorito ->
-            if (!esFavorito) {
-                lista.remove(producto)
-                adaptador.notifyDataSetChanged()
-                actualizarVacio(lista)   // <-- aquí también
-            }
-        }
-
-        btnRegresar.setOnClickListener {
-            finish()
-        }
+        cargarFavoritosEnUI()
     }
 
-    // Función para mostrar/ocultar el mensaje de vacío
-    private fun actualizarVacio(lista: List<Producto>) {
-        txtVacio.visibility = if (lista.isEmpty()) View.VISIBLE else View.GONE
+    override fun onResume() {
+        super.onResume()
+        cargarFavoritosEnUI()
+    }
+
+    private fun cargarFavoritosEnUI() {
+        listaFavoritos.clear()
+        listaFavoritos.addAll(FavoritosManager.obtenerFavoritos())
+        adaptador.notifyDataSetChanged()
+
+        txtSinFavoritos.visibility =
+            if (listaFavoritos.isEmpty()) TextView.VISIBLE else TextView.GONE
     }
 }
