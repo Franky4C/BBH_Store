@@ -115,48 +115,82 @@ class DetalleProducto : AppCompatActivity() {
 
         // Botón comprar (compra directa de 1 pieza)
         btnComprar.setOnClickListener {
+            val prod = producto ?: return@setOnClickListener
+            val idDoc = prod.idDocumento
+
+            if (idDoc.isNullOrEmpty()) {
+                Toast.makeText(this, "No se puede comprar: producto sin ID", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             val cantidad = 1
-            val total = producto.precio * cantidad
             val correoUsuario = usuario?.correo ?: FirebaseAuth.getInstance().currentUser?.email
 
-            val itemOrden = ItemOrden(
-                nombre = producto.nombre,
-                nombreCorto = producto.nombreCorto,
-                categoria = producto.categoria,
-                precioUnitario = producto.precio,
-                cantidad = cantidad,
-                subtotal = total
-            )
+            if (correoUsuario.isNullOrEmpty()) {
+                Toast.makeText(this, "No se pudo determinar el usuario", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
 
-            val orden = Orden(
-                idCompra = "ORD-" + System.currentTimeMillis().toString(),
-                fecha = System.currentTimeMillis(),
-                usuarioCorreo = correoUsuario,
-                items = listOf(itemOrden),
-                total = total
-            )
+            val docProducto = db.collection("bbh_productos").document(idDoc)
 
-            db.collection("bbh_ordenes")
-                .document(orden.idCompra)
-                .set(orden)
-                .addOnSuccessListener {
-                    val intent = Intent(this, CompraConfirmadaActivity::class.java)
-                    intent.putExtra("orden_id", orden.idCompra)
-                    intent.putExtra("orden_total", orden.total)
-                    intent.putExtra("orden_correo", orden.usuarioCorreo)
-                    intent.putExtra("orden_fecha", orden.fecha)
-                    val resumen = "${cantidad} x ${producto.nombreCorto ?: producto.nombre} - $${String.format("%.2f", total)}"
-                    intent.putExtra("orden_resumen", resumen)
-                    startActivity(intent)
+            // 1) Transacción: validar y restar stock GLOBAL
+            db.runTransaction { tx ->
+                val snap = tx.get(docProducto)
+                val stockActual = snap.getLong("stock") ?: 0L
+
+                if (stockActual < cantidad) {
+                    throw Exception("Sin stock suficiente")
                 }
-                .addOnFailureListener { e ->
-                    Toast.makeText(
-                        this,
-                        "Error al guardar la orden: ${e.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
+
+                tx.update(docProducto, "stock", stockActual - cantidad)
+            }.addOnSuccessListener {
+                // 2) Si la transacción fue bien, ahora sí crear la orden
+                val idCompra = "ORD-" + System.currentTimeMillis().toString()
+                val total = prod.precio * cantidad
+
+                val itemOrden = ItemOrden(
+                    nombre = prod.nombre,
+                    nombreCorto = prod.nombreCorto,
+                    categoria = prod.categoria,
+                    precioUnitario = prod.precio,
+                    cantidad = cantidad,
+                    subtotal = total
+                    // si luego quieres, aquí puedes agregar idProducto
+                )
+
+                val orden = Orden(
+                    idCompra = idCompra,
+                    fecha = System.currentTimeMillis(),
+                    usuarioCorreo = correoUsuario,
+                    items = listOf(itemOrden),
+                    total = total
+                )
+
+                db.collection("bbh_ordenes")
+                    .document(orden.idCompra)
+                    .set(orden)
+                    .addOnSuccessListener {
+                        val intent = Intent(this, CompraConfirmadaActivity::class.java)
+                        intent.putExtra("orden_id", orden.idCompra)
+                        intent.putExtra("orden_total", orden.total)
+                        startActivity(intent)
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(
+                            this,
+                            "Error al guardar la orden: ${e.message}",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+            }.addOnFailureListener { e ->
+                if (e.message?.contains("Sin stock suficiente") == true) {
+                    Toast.makeText(this, "Sin stock suficiente para este producto", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "Error al actualizar stock: ${e.message}", Toast.LENGTH_LONG).show()
                 }
+            }
         }
+
 
         // Icono de carrito
         btnCarrito.setOnClickListener {

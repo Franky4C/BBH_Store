@@ -99,13 +99,11 @@ class AdminUsuariosActivity : AppCompatActivity() {
         val edtNombre = vista.findViewById<EditText>(R.id.edt_usuario_nombre)
         val edtApaterno = vista.findViewById<EditText>(R.id.edt_usuario_apaterno)
         val edtAmaterno = vista.findViewById<EditText>(R.id.edt_usuario_amaterno)
-        val edtTelefono = vista.findViewById<EditText>(R.id.edt_usuario_telefono)
         val edtRol = vista.findViewById<EditText>(R.id.edt_usuario_rol)
 
         edtNombre.setText(usuario.nombre ?: "")
         edtApaterno.setText(usuario.apaterno ?: "")
         edtAmaterno.setText(usuario.amaterno ?: "")
-        edtTelefono.setText(usuario.telefono ?: "")
         edtRol.setText(usuario.rol ?: "cliente")
 
         builder.setView(vista)
@@ -114,14 +112,12 @@ class AdminUsuariosActivity : AppCompatActivity() {
             val nombre = edtNombre.text.toString().trim()
             val apaterno = edtApaterno.text.toString().trim()
             val amaterno = edtAmaterno.text.toString().trim()
-            val telefono = edtTelefono.text.toString().trim()
             val rol = edtRol.text.toString().trim().ifEmpty { "cliente" }
 
             val data = hashMapOf(
                 "nombre" to nombre,
                 "apaterno" to apaterno,
                 "amaterno" to amaterno,
-                "telefono" to telefono,
                 "rol" to rol,
                 "correo" to (usuario.correo ?: ""),
                 "bloqueado" to usuario.bloqueado

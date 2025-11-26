@@ -20,6 +20,8 @@
             android:exported="false" />
         <activity android:name=".HistorialActivity"
             android:exported="false"/>
+        <activity android:name=".Tienda"
+            android:exported="false" />
         <activity
             android:name=".CompraConfirmadaActivity"
             android:exported="false" />
@@ -44,9 +46,6 @@
             android:exported="false" />
         <activity
             android:name=".Registro"
-            android:exported="false" />
-        <activity
-            android:name=".Tienda"
             android:exported="false" />
         <activity
             android:name=".Login"
