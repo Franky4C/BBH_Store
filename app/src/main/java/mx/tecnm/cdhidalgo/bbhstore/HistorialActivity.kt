@@ -90,12 +90,12 @@ class HistorialActivity : AppCompatActivity() {
         if (correo == null) {
             txtVacio.visibility = View.VISIBLE
             txtVacio.text = "No se pudo determinar el usuario para mostrar historial."
+            adaptador.actualizarDatos(emptyList())
             return
         }
 
         db.collection("bbh_ordenes")
             .whereEqualTo("usuarioCorreo", correo)
-            .orderBy("fecha", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { snapshot ->
                 if (snapshot.isEmpty) {
@@ -106,6 +106,7 @@ class HistorialActivity : AppCompatActivity() {
                 }
 
                 val lista = snapshot.toObjects(Orden::class.java)
+                    .sortedByDescending { it.fecha }
 
                 txtVacio.visibility = View.GONE
                 adaptador.actualizarDatos(lista)
@@ -114,6 +115,8 @@ class HistorialActivity : AppCompatActivity() {
                 txtVacio.visibility = View.VISIBLE
                 txtVacio.text = "Error al cargar historial."
                 Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                adaptador.actualizarDatos(emptyList())
             }
     }
+
 }

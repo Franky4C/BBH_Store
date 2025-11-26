@@ -27,14 +27,26 @@
 
         <TextView
             android:id="@+id/txt_titulo_admin"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginStart="12dp"
             android:text="Dashboard de Ventas"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <!-- Botón para ir a gestión de productos (fila aparte) -->
+    <Button
+        android:id="@+id/btn_ir_admin_productos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gestión de productos"
+        android:textAllCaps="false"
+        android:backgroundTint="#0091EA"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="12dp" />
 
     <TextView
         android:id="@+id/txt_subtitulo_admin"
@@ -59,7 +71,7 @@
         android:layout_marginTop="24dp"
         android:visibility="gone" />
 
-    <!-- Card 1: producto más vendido -->
+    <!-- Card 1 -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_top1"
         android:layout_width="match_parent"
@@ -106,7 +118,7 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Card 2: segundo producto más vendido -->
+    <!-- Card 2 -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_top2"
         android:layout_width="match_parent"

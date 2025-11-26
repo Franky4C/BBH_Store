@@ -1,7 +1,9 @@
 package mx.tecnm.cdhidalgo.bbhstore
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -19,6 +21,8 @@ class AdminDashboardActivity : AppCompatActivity() {
     private val db = Firebase.firestore
 
     private lateinit var btnRegresar: ImageButton
+    private lateinit var btnIrAdminProductos: Button
+
     private lateinit var txtSinDatos: TextView
 
     private lateinit var txtTop1Nombre: TextView
@@ -28,9 +32,9 @@ class AdminDashboardActivity : AppCompatActivity() {
     private lateinit var txtTop2Nombre: TextView
     private lateinit var txtTop2Cantidad: TextView
     private lateinit var txtTop2Total: TextView
+
     private lateinit var cardTop1: MaterialCardView
     private lateinit var cardTop2: MaterialCardView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +47,7 @@ class AdminDashboardActivity : AppCompatActivity() {
         }
 
         btnRegresar = findViewById(R.id.btn_regresar_admin)
+        btnIrAdminProductos = findViewById(R.id.btn_ir_admin_productos)
         txtSinDatos = findViewById(R.id.txt_sin_datos_admin)
 
         txtTop1Nombre = findViewById(R.id.txt_top1_nombre)
@@ -52,13 +57,20 @@ class AdminDashboardActivity : AppCompatActivity() {
         txtTop2Nombre = findViewById(R.id.txt_top2_nombre)
         txtTop2Cantidad = findViewById(R.id.txt_top2_cantidad)
         txtTop2Total = findViewById(R.id.txt_top2_total)
+
         cardTop1 = findViewById(R.id.card_top1)
         cardTop2 = findViewById(R.id.card_top2)
 
+        // Estado inicial
         cardTop1.visibility = View.GONE
         cardTop2.visibility = View.GONE
+        txtSinDatos.visibility = View.GONE
 
         btnRegresar.setOnClickListener { finish() }
+
+        btnIrAdminProductos.setOnClickListener {
+            startActivity(Intent(this, AdminProductosActivity::class.java))
+        }
 
         cargarTopProductos()
     }
@@ -79,9 +91,8 @@ class AdminDashboardActivity : AppCompatActivity() {
                 // 2. Convertir documentos a objetos Orden
                 val listaOrdenes = snapshot.toObjects(Orden::class.java)
 
-                // 3. AQUÍ se declara el mapa (antes de usarlo)
+                // 3. Mapa producto -> (cantTotal, totalVendido)
                 val mapaVentas = mutableMapOf<String, Pair<Int, Double>>()
-                // clave: nombreProducto  valor: (cantidadTotal, totalVendido)
 
                 for (orden in listaOrdenes) {
                     for (item in orden.items) {
@@ -147,5 +158,4 @@ class AdminDashboardActivity : AppCompatActivity() {
                 cardTop2.visibility = View.GONE
             }
     }
-
 }
