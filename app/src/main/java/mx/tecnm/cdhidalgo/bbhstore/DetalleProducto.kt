@@ -1,40 +1,45 @@
 package mx.tecnm.cdhidalgo.bbhstore
 
-import android.widget.Toast
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
-import com.google.firebase.auth.FirebaseAuth
-import mx.tecnm.cdhidalgo.bbhstore.dataclass.ItemOrden
-import mx.tecnm.cdhidalgo.bbhstore.dataclass.Orden
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.firestore
+import com.bumptech.glide.Glide
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.CarritoManager
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.ItemOrden
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.Orden
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.Producto
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.Usuario
 
 class DetalleProducto : AppCompatActivity() {
 
+    private val db = Firebase.firestore
+
     private lateinit var btnRegresar: ImageButton
     private lateinit var btnCarrito: ImageButton
     private lateinit var contadorCarrito: TextView
     private lateinit var usuarioNombre: TextView
+
+    private lateinit var tituloDetalle: TextView
     private lateinit var imagenProducto: ImageView
     private lateinit var nombreProducto: TextView
     private lateinit var descripcionProducto: TextView
     private lateinit var precioProducto: TextView
     private lateinit var btnComprar: Button
     private lateinit var btnAgregarCarrito: Button
-    private val db = Firebase.firestore
+
     private var usuario: Usuario? = null
-    private var producto: Producto? = null
+    private lateinit var producto: Producto
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,40 +51,60 @@ class DetalleProducto : AppCompatActivity() {
             insets
         }
 
-        // Referencias de UI (coinciden con tu XML)
+        // Referencias UI (IDs según tu XML)
         btnRegresar = findViewById(R.id.btn_regresar_detalle)
         btnCarrito = findViewById(R.id.btn_carrito_detalle)
         contadorCarrito = findViewById(R.id.contador_carrito_detalle)
         usuarioNombre = findViewById(R.id.usuario_detalle)
+
+        tituloDetalle = findViewById(R.id.txt_titulo_detalle_producto)
         imagenProducto = findViewById(R.id.imagen_detalle)
         nombreProducto = findViewById(R.id.nombre_detalle)
         descripcionProducto = findViewById(R.id.descripcion_detalle)
         precioProducto = findViewById(R.id.precio_detalle)
+
         btnComprar = findViewById(R.id.btn_comprar_detalle)
         btnAgregarCarrito = findViewById(R.id.btn_agregar_carrito_detalle)
 
         // Recibir datos
         usuario = intent.getParcelableExtra("usuario")
         producto = intent.getParcelableExtra("producto")
+            ?: run {
+                Toast.makeText(this, "No se pudo abrir el producto", Toast.LENGTH_LONG).show()
+                finish()
+                return
+            }
 
-        // Mostrar nombre de usuario (completo si quieres)
+        // Título de la pantalla
+        tituloDetalle.text = "Detalles del producto"
+
+        // Nombre del usuario
         usuario?.let { u ->
             val nombreCompleto = "${u.nombre} ${u.apaterno} ${u.amaterno}"
             usuarioNombre.text = nombreCompleto
         }
 
-        // Mostrar datos del producto
-        producto?.let { p ->
-            imagenProducto.setImageResource(p.imagen)
-            nombreProducto.text = p.nombre
-            descripcionProducto.text = p.descripcion
-            precioProducto.text = "$${p.precio}"
+        // Datos del producto
+        nombreProducto.text = producto.nombreCorto ?: producto.nombre ?: "Producto"
+        descripcionProducto.text = producto.descripcion ?: ""
+        precioProducto.text = "$${String.format("%.2f", producto.precio)}"
+
+        // Cargar imagen:
+        // - Si hay imagenUrl (de Firebase Storage) → Glide.
+        // - Si no, usamos el drawable local (producto.imagen).
+        if (!producto.imagenUrl.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(producto.imagenUrl)
+                .placeholder(producto.imagen)   // tu logo u otra imagen local
+                .centerCrop()
+                .into(imagenProducto)
+        } else {
+            imagenProducto.setImageResource(producto.imagen)
         }
 
-        // Nuevo botón: AGREGAR A CARRITO
+        // Botón agregar al carrito
         btnAgregarCarrito.setOnClickListener {
-            val prod = producto ?: return@setOnClickListener
-            val agregado = CarritoManager.agregarProducto(prod, 1)
+            val agregado = CarritoManager.agregarProducto(producto, 1)
             if (agregado) {
                 Toast.makeText(this, "Agregado al carrito", Toast.LENGTH_SHORT).show()
                 actualizarContadorCarrito()
@@ -88,29 +113,23 @@ class DetalleProducto : AppCompatActivity() {
             }
         }
 
-        // Botón COMPRAR
+        // Botón comprar (compra directa de 1 pieza)
         btnComprar.setOnClickListener {
-            val prod = producto ?: return@setOnClickListener
-
-            // Validar stock si lo manejas en Producto
-            // if (prod.stock <= 0) { ... }  // solo si tienes ese campo
-
-            val idCompra = "ORD-" + System.currentTimeMillis().toString()
             val cantidad = 1
-            val total = prod.precio * cantidad
+            val total = producto.precio * cantidad
             val correoUsuario = usuario?.correo ?: FirebaseAuth.getInstance().currentUser?.email
 
             val itemOrden = ItemOrden(
-                nombre = prod.nombre,
-                nombreCorto = prod.nombreCorto,
-                categoria = prod.categoria,
-                precioUnitario = prod.precio,
+                nombre = producto.nombre,
+                nombreCorto = producto.nombreCorto,
+                categoria = producto.categoria,
+                precioUnitario = producto.precio,
                 cantidad = cantidad,
                 subtotal = total
             )
 
             val orden = Orden(
-                idCompra = idCompra,
+                idCompra = "ORD-" + System.currentTimeMillis().toString(),
                 fecha = System.currentTimeMillis(),
                 usuarioCorreo = correoUsuario,
                 items = listOf(itemOrden),
@@ -120,37 +139,42 @@ class DetalleProducto : AppCompatActivity() {
             db.collection("bbh_ordenes")
                 .document(orden.idCompra)
                 .set(orden)
-
                 .addOnSuccessListener {
                     val intent = Intent(this, CompraConfirmadaActivity::class.java)
                     intent.putExtra("orden_id", orden.idCompra)
                     intent.putExtra("orden_total", orden.total)
+                    intent.putExtra("orden_correo", orden.usuarioCorreo)
+                    intent.putExtra("orden_fecha", orden.fecha)
+                    val resumen = "${cantidad} x ${producto.nombreCorto ?: producto.nombre} - $${String.format("%.2f", total)}"
+                    intent.putExtra("orden_resumen", resumen)
                     startActivity(intent)
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error al guardar la orden: ${e.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this,
+                        "Error al guardar la orden: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
         }
 
-
-        // Icono de carrito: abrir pantalla de carrito
+        // Icono de carrito
         btnCarrito.setOnClickListener {
             val intent = Intent(this, CarritoActivity::class.java)
+            intent.putExtra("usuario", usuario)
             startActivity(intent)
         }
 
-        // Flecha regresar: volver a la actividad anterior (Tienda)
+        // Flecha regresar
         btnRegresar.setOnClickListener {
             finish()
         }
 
-        // Contador inicial
         actualizarContadorCarrito()
     }
 
     override fun onResume() {
         super.onResume()
-        // Por si se va al carrito y regresa a detalle
         actualizarContadorCarrito()
     }
 

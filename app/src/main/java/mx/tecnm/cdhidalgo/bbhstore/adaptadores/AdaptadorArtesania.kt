@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import mx.tecnm.cdhidalgo.bbhstore.R
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.FavoritosManager
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.Producto
+import com.bumptech.glide.Glide
+
 
 class AdaptadorArtesania(
     private val listaProductos: ArrayList<Producto>
@@ -38,31 +40,39 @@ class AdaptadorArtesania(
     override fun onBindViewHolder(holder: ProductoViewHolder, position: Int) {
         val producto = listaProductos[position]
 
-        holder.vistaImagen.setImageResource(producto.imagen)
+        // Cargar imagen desde URL si existe, si no usar drawable local
+        if (!producto.imagenUrl.isNullOrBlank()) {
+            Glide.with(holder.itemView.context)
+                .load(producto.imagenUrl)
+                .placeholder(producto.imagen)   // usa el drawable como placeholder
+                .error(R.drawable.logo)
+                .into(holder.vistaImagen)
+        } else {
+            holder.vistaImagen.setImageResource(producto.imagen)
+        }
+
         holder.vistaNombre.text = producto.nombreCorto
 
-        // Estado visual de favorito
+        // resto de tu lógica (favoritos, clicks, etc.) queda igual
         val esFav = FavoritosManager.esFavorito(producto)
         aplicarEstiloFavorito(holder.btnFavorito, esFav)
 
-        // Click normal: ver detalle
         holder.itemView.setOnClickListener {
             onProductoClick?.invoke(producto)
         }
 
-        // Long click: por ejemplo agregar al carrito (ya lo tienes en Tienda)
         holder.itemView.setOnLongClickListener {
             onProductoLongClick?.invoke(producto)
             true
         }
 
-        // Click en corazón: alternar favorito
         holder.btnFavorito.setOnClickListener {
             val nuevoEstado = FavoritosManager.alternarFavorito(producto)
             aplicarEstiloFavorito(holder.btnFavorito, nuevoEstado)
             onFavoritoCambiado?.invoke(producto, nuevoEstado)
         }
     }
+
 
     private fun aplicarEstiloFavorito(view: TextView, esFavorito: Boolean) {
         if (esFavorito) {

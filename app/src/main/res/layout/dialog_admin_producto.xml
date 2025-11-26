@@ -67,13 +67,16 @@
             android:layout_marginTop="8dp"
             android:inputType="number" />
 
+        <!-- Campo usado como "selector de imagen" -->
         <EditText
             android:id="@+id/edt_imagen_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nombre drawable (ej: guante_rojo)"
+            android:hint="Toca aquí para elegir imagen"
             android:layout_marginTop="8dp"
-            android:inputType="text" />
+            android:focusable="false"
+            android:clickable="true"
+            android:inputType="none" />
 
     </LinearLayout>
 </ScrollView>

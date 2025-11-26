@@ -53,4 +53,10 @@ dependencies {
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation("com.google.zxing:core:3.5.1")
 
+    // NUEVO: Firebase Storage
+    implementation("com.google.firebase:firebase-storage-ktx:21.0.0")
+
+    // NUEVO: Glide para cargar imágenes desde URL
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
 }

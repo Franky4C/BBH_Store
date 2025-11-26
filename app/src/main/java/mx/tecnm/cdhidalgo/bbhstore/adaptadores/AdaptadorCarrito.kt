@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide // ⭐ Importación de Glide añadida
 import mx.tecnm.cdhidalgo.bbhstore.R
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.CarritoManager
 
@@ -31,7 +32,7 @@ class AdaptadorCarrito :
         val txtCantidad: TextView = itemView.findViewById(R.id.txt_carrito_cantidad)
         val btnMas: TextView = itemView.findViewById(R.id.btn_mas)
         val btnMenos: TextView = itemView.findViewById(R.id.btn_menos)
-        val chkSeleccionado: CheckBox = itemView.findViewById(R.id.chk_seleccionado)
+        val chkSeleccionado: CheckBox = itemView.findViewById(R.id.chk_seleccionado) // CheckBox re-añadida
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarritoViewHolder {
@@ -46,7 +47,19 @@ class AdaptadorCarrito :
         val item = items[position]
         val producto = item.producto
 
-        holder.imgProducto.setImageResource(producto.imagen)
+        // ⭐ LÓGICA DE CARGA DE IMAGEN CON GLIDE AÑADIDA AQUÍ
+        if (!producto.imagenUrl.isNullOrEmpty()) {
+            Glide.with(holder.itemView.context)
+                .load(producto.imagenUrl)
+                .placeholder(producto.imagen)  // Usa el drawable como placeholder
+                .centerCrop()
+                .into(holder.imgProducto)
+        } else {
+            // Si no hay URL, usa el recurso local (imagen)
+            holder.imgProducto.setImageResource(producto.imagen)
+        }
+        // ⭐ FIN LÓGICA GLIDE
+
         holder.txtNombre.text = producto.nombreCorto ?: producto.nombre ?: "Producto"
         holder.txtPrecio.text = "$${String.format("%.2f", producto.precio)}"
         holder.txtStock.text = "Stock: ${producto.stock}"
@@ -68,8 +81,8 @@ class AdaptadorCarrito :
             val ok = CarritoManager.actualizarCantidad(producto, nuevaCantidad)
             if (ok) {
                 item.cantidad = nuevaCantidad
+                // Usamos notifyItemChanged, es más eficiente que notifyDataSetChanged
                 holder.txtCantidad.text = nuevaCantidad.toString()
-                notifyItemChanged(position)
                 onCantidadCambiada?.invoke()
             } else {
                 Toast.makeText(
@@ -85,12 +98,12 @@ class AdaptadorCarrito :
             val ok = CarritoManager.actualizarCantidad(producto, nuevaCantidad)
             if (ok) {
                 if (nuevaCantidad <= 0) {
-                    // Se eliminó del carrito
+                    // Si se eliminó (cantidad 0), refrescamos toda la lista
                     refrescarDatos()
                 } else {
                     item.cantidad = nuevaCantidad
+                    // Usamos notifyItemChanged
                     holder.txtCantidad.text = nuevaCantidad.toString()
-                    notifyItemChanged(position)
                 }
                 onCantidadCambiada?.invoke()
             }
@@ -112,5 +125,6 @@ class AdaptadorCarrito :
         items.addAll(CarritoManager.obtenerItems())
         seleccionados.clear()
         notifyDataSetChanged()
+        onCantidadCambiada?.invoke() // Opcional: invocar también si los totales cambian tras refrescar
     }
 }

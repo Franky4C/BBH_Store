@@ -154,8 +154,8 @@ class Tienda : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // Al volver de CarritoActivity, refrescamos el contador
         actualizarContadorCarrito()
+        cargarProductosDesdeFirestore()   // <- recarga la lista desde Firestore
     }
 
     private fun cargarProductosDesdeFirestore() {
@@ -172,23 +172,17 @@ class Tienda : AppCompatActivity() {
                     val precio = doc.getDouble("precio") ?: 0.0
                     val stock = doc.getLong("stock")?.toInt() ?: 0
 
-                    // nombre del drawable desde Firestore
-                    val nombreImagen = doc.getString("imagen") ?: "artesania1"
-                    val resId = resources.getIdentifier(
-                        nombreImagen,
-                        "drawable",
-                        packageName
-                    )
-                    val imagenRes = if (resId != 0) resId else R.drawable.artesania1
+                    val imagenUrl = doc.getString("imagenUrl")   // URL subida a Storage
 
                     val producto = Producto(
-                        imagen = imagenRes,
+                        imagen = R.drawable.artesania1,          // placeholder
                         nombreCorto = nombreCorto,
                         nombre = nombre,
                         precio = precio,
                         descripcion = descripcion,
                         categoria = categoria,
-                        stock = stock
+                        stock = stock,
+                        imagenUrl = imagenUrl                    // IMPORTANTE
                     )
                     listaArtesanias.add(producto)
                 }
@@ -207,6 +201,9 @@ class Tienda : AppCompatActivity() {
                 ).show()
             }
     }
+
+
+
 
     private fun actualizarContadorCarrito() {
         val total = CarritoManager.obtenerCantidadTotal()
