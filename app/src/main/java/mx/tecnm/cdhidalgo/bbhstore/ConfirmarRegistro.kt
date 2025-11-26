@@ -12,7 +12,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
-import mx.tecnm.cdhidalgo.bbhstore.dataclass.Usuario
 
 class ConfirmarRegistro : AppCompatActivity() {
 
@@ -22,6 +21,13 @@ class ConfirmarRegistro : AppCompatActivity() {
     private lateinit var btn_corregir_datos: Button
 
     private lateinit var auth: FirebaseAuth
+    private val db = Firebase.firestore
+
+    private var nombre: String = ""
+    private var apaterno: String = ""
+    private var amaterno: String = ""
+    private var correo: String = ""
+    private var password: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,63 +39,76 @@ class ConfirmarRegistro : AppCompatActivity() {
             insets
         }
 
-        //Inicializar la autenticación de Firebase
         auth = FirebaseAuth.getInstance()
 
-        //Acceso a la base de datos Cloud Firestore
-        val db = Firebase.firestore
-
-        val nombre = intent.getStringExtra("nombre")
-        val apaterno = intent.getStringExtra("apaterno")
-        val amaterno = intent.getStringExtra("amaterno")
-        val correo = intent.getStringExtra("correo")
-        val password = intent.getStringExtra("password")
+        nombre   = intent.getStringExtra("nombre") ?: ""
+        apaterno = intent.getStringExtra("apaterno") ?: ""
+        amaterno = intent.getStringExtra("amaterno") ?: ""
+        correo   = intent.getStringExtra("correo") ?: ""
+        password = intent.getStringExtra("password") ?: ""
 
         etiqueta_nombre = findViewById(R.id.etiqueta_nombre)
         etiqueta_credenciales = findViewById(R.id.etiqueta_credenciales)
-
         btn_confirmar_datos = findViewById(R.id.btn_confirmar_datos)
         btn_corregir_datos = findViewById(R.id.btn_corregir_datos)
 
         etiqueta_nombre.text = "$nombre $apaterno $amaterno"
         etiqueta_credenciales.text = "Tus credenciales son:\nCorreo: $correo\nContraseña: $password"
 
-        val usuario = Usuario(
-            correo.toString(),
-            nombre.toString(),
-            apaterno.toString(),
-            amaterno.toString())
-
+        // Confirmar datos → crear cuenta en Auth + guardar en bbh_usuarios
         btn_confirmar_datos.setOnClickListener {
-            if(correo.toString().isNotEmpty() && password.toString().isNotEmpty()){
-                auth.createUserWithEmailAndPassword(correo.toString(), password.toString())
-                    .addOnCompleteListener {
-                        if(it.isSuccessful) {
-                            val intent = Intent(this, Login::class.java).apply {
-                                db.collection("usuarios")
-                                    .document(correo.toString())
-                                    .set(usuario)
-                            }
-                            startActivity(intent)
-                        } else {
-                            showAlert()
-                        }
-                    }
+            if (correo.isNotEmpty() && password.isNotEmpty()) {
+                crearCuentaEnFirebaseAuth()
+            } else {
+                showAlert("Correo o contraseña vacíos")
             }
         }
 
+        // Corregir datos → regresar a Registro
         btn_corregir_datos.setOnClickListener {
-            val intent = Intent(this, Registro::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, Registro::class.java))
+            finish()
         }
     }
 
-    private fun showAlert() {
+    private fun crearCuentaEnFirebaseAuth() {
+        auth.createUserWithEmailAndPassword(correo, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+
+                    val data = hashMapOf(
+                        "correo"    to correo,
+                        "nombre"    to nombre,
+                        "apaterno"  to apaterno,
+                        "amaterno"  to amaterno,
+                        "rol"       to "cliente",   // rol por defecto
+                        "bloqueado" to false        // no bloqueado por defecto
+                    )
+
+                    val uid = task.result?.user?.uid
+                    val docId = uid ?: correo   // puedes usar uid o correo como ID
+
+                    db.collection("bbh_usuarios")
+                        .document(docId)
+                        .set(data)
+                        .addOnSuccessListener {
+                            startActivity(Intent(this, Login::class.java))
+                            finish()
+                        }
+                        .addOnFailureListener { e ->
+                            showAlert("Error al guardar datos del usuario: ${e.message}")
+                        }
+                } else {
+                    showAlert("Se ha producido un error creando la cuenta: ${task.exception?.message}")
+                }
+            }
+    }
+
+    private fun showAlert(mensaje: String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("Se ha producido un error autenticando al usuario")
+        builder.setMessage(mensaje)
         builder.setPositiveButton("Aceptar", null)
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
+        builder.create().show()
     }
 }

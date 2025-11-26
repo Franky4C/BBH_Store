@@ -22,6 +22,8 @@ class AdminDashboardActivity : AppCompatActivity() {
 
     private lateinit var btnRegresar: ImageButton
     private lateinit var btnIrAdminProductos: Button
+    private lateinit var btnIrAdminUsuarios: Button
+
 
     private lateinit var txtSinDatos: TextView
 
@@ -49,6 +51,8 @@ class AdminDashboardActivity : AppCompatActivity() {
         btnRegresar = findViewById(R.id.btn_regresar_admin)
         btnIrAdminProductos = findViewById(R.id.btn_ir_admin_productos)
         txtSinDatos = findViewById(R.id.txt_sin_datos_admin)
+        btnIrAdminUsuarios = findViewById(R.id.btn_ir_admin_usuarios)
+
 
         txtTop1Nombre = findViewById(R.id.txt_top1_nombre)
         txtTop1Cantidad = findViewById(R.id.txt_top1_cantidad)
@@ -73,6 +77,10 @@ class AdminDashboardActivity : AppCompatActivity() {
         }
 
         cargarTopProductos()
+        btnIrAdminUsuarios.setOnClickListener {
+            startActivity(Intent(this, AdminUsuariosActivity::class.java))
+        }
+
     }
 
     private fun cargarTopProductos() {

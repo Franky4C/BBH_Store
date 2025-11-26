@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -24,13 +25,12 @@ class Login : AppCompatActivity() {
     private lateinit var btn_registrar: MaterialButton
     private lateinit var btn_olvidar: MaterialButton
 
-    // --- 1. Declarar los nuevos botones de redes sociales ---
     private lateinit var btnInstagram: ImageButton
     private lateinit var btnFacebook: ImageButton
     private lateinit var btnWhatsapp: ImageButton
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var usuario: Usuario
+    private var usuario: Usuario = Usuario()   // usa valores por defecto del data class
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +42,7 @@ class Login : AppCompatActivity() {
             insets
         }
 
-        //inicializar la autenticacion
         auth = FirebaseAuth.getInstance()
-        //auth = Firebase.auth
-
-        //Acceso a la base de datos Cloud Firestore
         val db = Firebase.firestore
 
         correo = findViewById(R.id.correo_login)
@@ -55,76 +51,111 @@ class Login : AppCompatActivity() {
         btn_registrar = findViewById(R.id.btn_registrar)
         btn_olvidar = findViewById(R.id.btn_olvidar)
 
-        // --- 2. Inicializar los botones de redes sociales ---
         btnInstagram = findViewById(R.id.btn_instagram)
         btnFacebook = findViewById(R.id.btn_facebook)
         btnWhatsapp = findViewById(R.id.btn_whatsapp)
 
-        usuario = Usuario("", "", "", "")
-
+        // LOGIN
         btn_ingresar.setOnClickListener {
-            val email = correo.editText?.text.toString()
-            val pass = password.editText?.text.toString()
-            if(email.isNotEmpty() && pass.isNotEmpty())
-                auth.signInWithEmailAndPassword(email, pass)
-                    .addOnCompleteListener {
-                        if(it.isSuccessful) {
-                            db.collection("usuarios")
-                                .whereEqualTo("correo", email)
-                                .get()
-                                .addOnSuccessListener { documents ->
-                                    for (document in documents){
-                                        usuario = Usuario(
-                                            document.data["correo"].toString(),
-                                            document.data["nombre"].toString(),
-                                            document.data["apaterno"].toString(),
-                                            document.data["amaterno"].toString()
-                                        )
+            val email = correo.editText?.text.toString().trim()
+            val pass = password.editText?.text.toString().trim()
 
-                                    }
-                                    val intent = Intent(this, MainActivity::class.java)
-                                    intent.putExtra("usuario", usuario)
-                                    startActivity(intent)
-                                    finish()
+            if (email.isEmpty() || pass.isEmpty()) {
+                Toast.makeText(this, "Ingresa correo y contraseña", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            auth.signInWithEmailAndPassword(email, pass)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // Leer datos del usuario en Firestore
+                        db.collection("bbh_usuarios")   // OJO: usa el mismo nombre que en AdminUsuariosActivity
+                            .whereEqualTo("correo", email)
+                            .get()
+                            .addOnSuccessListener { documents ->
+                                if (documents.isEmpty) {
+                                    FirebaseAuth.getInstance().signOut()
+                                    Toast.makeText(
+                                        this,
+                                        "Usuario no encontrado en Firestore",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    return@addOnSuccessListener
                                 }
-                        } else {
-                            showAlert()
-                        }
+
+                                val doc = documents.first()
+
+                                usuario = Usuario(
+                                    nombre = doc.getString("nombre"),
+                                    apaterno = doc.getString("apaterno"),
+                                    amaterno = doc.getString("amaterno"),
+                                    correo = doc.getString("correo"),
+                                    telefono = doc.getString("telefono"),
+                                    rol = doc.getString("rol") ?: "cliente",
+                                    bloqueado = doc.getBoolean("bloqueado") ?: false
+                                )
+
+                                // Validar bloqueo
+                                if (usuario.bloqueado) {
+                                    Toast.makeText(
+                                        this,
+                                        "Tu cuenta está bloqueada. Contacta al administrador.",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    FirebaseAuth.getInstance().signOut()
+                                    return@addOnSuccessListener
+                                }
+
+                                // Si todo OK → ir a MainActivity
+                                val intent = Intent(this, MainActivity::class.java)
+                                intent.putExtra("usuario", usuario)
+                                startActivity(intent)
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                FirebaseAuth.getInstance().signOut()
+                                Toast.makeText(
+                                    this,
+                                    "Error al leer datos del usuario: ${e.message}",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                    } else {
+                        showAlert()
                     }
+                }
         }
 
+        // REGISTRO
         btn_registrar.setOnClickListener {
             val intent = Intent(this, Registro::class.java)
             startActivity(intent)
         }
 
+        // OLVIDÉ MI CONTRASEÑA
         btn_olvidar.setOnClickListener {
             val intent = Intent(this, RecuperaPassword::class.java)
             startActivity(intent)
         }
 
-        // --- 3. Agregar los listeners para los botones de redes sociales ---
-
+        // INSTAGRAM
         btnInstagram.setOnClickListener {
-            val url = "https://www.instagram.com/barracudabbh/reel/DBjZ3aFurbe/" // <-- CAMBIA ESTO
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            startActivity(intent)
+            val url = "https://www.instagram.com/barracudabbh/reel/DBjZ3aFurbe/"
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
 
+        // FACEBOOK
         btnFacebook.setOnClickListener {
-            val url = "https://www.facebook.com/barracudaboxing/videos/1452571902113045/" // <-- CAMBIA ESTO
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            startActivity(intent)
+            val url = "https://www.facebook.com/barracudaboxing/videos/1452571902113045/"
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
 
+        // WHATSAPP (número en formato internacional sin 'tel:')
         btnWhatsapp.setOnClickListener {
-            // Reemplaza "1234567890" con tu número de teléfono, incluyendo el código de país (ej. 52 para México)
-            val numeroWhatsapp = "tel:+527866880131" // <-- CAMBIA ESTO
+            val numeroWhatsapp = "527866880131" // 52 + número
             val url = "https://api.whatsapp.com/send?phone=$numeroWhatsapp"
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            startActivity(intent)
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
-
     }
 
     private fun showAlert() {

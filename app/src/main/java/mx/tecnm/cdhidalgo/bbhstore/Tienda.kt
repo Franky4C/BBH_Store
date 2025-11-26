@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import com.google.firebase.auth.FirebaseAuth
 import mx.tecnm.cdhidalgo.bbhstore.adaptadores.AdaptadorArtesania
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.CarritoManager
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.Producto
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.Usuario
+
 
 class Tienda : AppCompatActivity() {
 
