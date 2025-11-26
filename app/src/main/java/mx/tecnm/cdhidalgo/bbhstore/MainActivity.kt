@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.Usuario
+import mx.tecnm.cdhidalgo.bbhstore.dataclass.CarritoManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +35,18 @@ class MainActivity : AppCompatActivity() {
             finish()
             return
         }
+
+// Configurar carrito para este usuario y cargar lo que tenga guardado
+        // Después de recibir 'usuario'
+        CarritoManager.configurarUsuario(usuario.correo) { ok, error ->
+            if (!ok && error != null) {
+                // Opcional, si quieres ver el error:
+                // Toast.makeText(this, "Error cargando carrito: $error", Toast.LENGTH_LONG).show()
+            }
+        }
+
+
+
 
         val btnTienda: ImageButton = findViewById(R.id.btnTienda)
         val btnPlanes: ImageButton = findViewById(R.id.btnPlanes)
@@ -77,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         // Cerrar sesión
         btnCerrarSesion.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
+            CarritoManager.limpiarSesion()
 
             val intent = Intent(this, Login::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

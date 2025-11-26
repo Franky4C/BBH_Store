@@ -151,29 +151,30 @@ class Tienda : AppCompatActivity() {
                 listaArtesanias.clear()
 
                 for (doc in snapshot.documents) {
-                    val nombreCorto = doc.getString("nombreCorto") ?: ""
-                    val nombre = doc.getString("nombre") ?: nombreCorto
-                    val descripcion = doc.getString("descripcion") ?: ""
-                    val categoria = doc.getString("categoria") ?: "artesania"
-                    val precio = doc.getDouble("precio") ?: 0.0
-                    val stock = doc.getLong("stock")?.toInt() ?: 0
+                    val idDoc        = doc.id
+                    val nombreCorto  = doc.getString("nombreCorto") ?: ""
+                    val nombre       = doc.getString("nombre") ?: nombreCorto
+                    val descripcion  = doc.getString("descripcion") ?: ""
+                    val categoria    = doc.getString("categoria") ?: "artesania"
+                    val precio       = doc.getDouble("precio") ?: 0.0
+                    val stock        = doc.getLong("stock")?.toInt() ?: 0
+                    val imagenUrl    = doc.getString("imagenUrl")
 
-                    val imagenUrl = doc.getString("imagenUrl") // por si luego lo usas con Glide
-
-                    // Por ahora usamos un drawable genérico; ya tenías logo
+                    // Drawable genérico (logo) mientras solo usas imagenUrl
                     val imagenRes = R.drawable.logo
 
                     val producto = Producto(
-                        imagen = imagenRes,
+                        idDocumento = idDoc,     // << importante para stock global / carrito
+                        imagen      = imagenRes, // o 0 si SOLO dibujas con Glide
                         nombreCorto = nombreCorto,
-                        nombre = nombre,
-                        precio = precio,
+                        nombre      = nombre,
+                        precio      = precio,
                         descripcion = descripcion,
-                        categoria = categoria,
-                        stock = stock,
-                        idDocumento = doc.id,      // IMPORTANTE para el stock global
-                        imagenUrl = imagenUrl      // guardamos la URL por si la usas después
+                        categoria   = categoria,
+                        stock       = stock,
+                        imagenUrl   = imagenUrl
                     )
+
                     listaArtesanias.add(producto)
                 }
 
@@ -191,6 +192,7 @@ class Tienda : AppCompatActivity() {
                 ).show()
             }
     }
+
 
     private fun actualizarContadorCarrito() {
         val total = CarritoManager.obtenerCantidadTotal()
