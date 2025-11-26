@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#121212"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <!-- Barra superior -->
@@ -37,32 +37,41 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Botón para ir a gestión de productos (fila aparte) -->
-    <Button
-        android:id="@+id/btn_ir_admin_productos"
+    <!-- Botones de administración -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Gestión de productos"
-        android:textAllCaps="false"
-        android:backgroundTint="#0091EA"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="12dp" />
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="12dp">
 
-    <Button
-        android:id="@+id/btn_ir_admin_usuarios"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Gestión de usuarios"
-        android:textAllCaps="false"
-        android:backgroundTint="#9C27B0"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="8dp" />
+        <Button
+            android:id="@+id/btn_ir_admin_productos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Gestión de productos"
+            android:textAllCaps="false"
+            android:backgroundTint="#0091EA"
+            android:textColor="@android:color/white" />
 
+        <Button
+            android:id="@+id/btn_ir_admin_usuarios"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Gestión de usuarios"
+            android:textAllCaps="false"
+            android:backgroundTint="#FF9800"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/txt_subtitulo_admin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:text="Top 2 productos más vendidos"
         android:textColor="#8AFF8E"
         android:textSize="16sp"
@@ -82,7 +91,7 @@
         android:layout_marginTop="24dp"
         android:visibility="gone" />
 
-    <!-- Card 1 -->
+    <!-- Card 1: producto más vendido -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_top1"
         android:layout_width="match_parent"
@@ -129,7 +138,7 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Card 2 -->
+    <!-- Card 2: segundo producto más vendido -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_top2"
         android:layout_width="match_parent"

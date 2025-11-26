@@ -24,7 +24,6 @@ class AdminDashboardActivity : AppCompatActivity() {
     private lateinit var btnIrAdminProductos: Button
     private lateinit var btnIrAdminUsuarios: Button
 
-
     private lateinit var txtSinDatos: TextView
 
     private lateinit var txtTop1Nombre: TextView
@@ -50,9 +49,9 @@ class AdminDashboardActivity : AppCompatActivity() {
 
         btnRegresar = findViewById(R.id.btn_regresar_admin)
         btnIrAdminProductos = findViewById(R.id.btn_ir_admin_productos)
-        txtSinDatos = findViewById(R.id.txt_sin_datos_admin)
         btnIrAdminUsuarios = findViewById(R.id.btn_ir_admin_usuarios)
 
+        txtSinDatos = findViewById(R.id.txt_sin_datos_admin)
 
         txtTop1Nombre = findViewById(R.id.txt_top1_nombre)
         txtTop1Cantidad = findViewById(R.id.txt_top1_cantidad)
@@ -65,10 +64,8 @@ class AdminDashboardActivity : AppCompatActivity() {
         cardTop1 = findViewById(R.id.card_top1)
         cardTop2 = findViewById(R.id.card_top2)
 
-        // Estado inicial
         cardTop1.visibility = View.GONE
         cardTop2.visibility = View.GONE
-        txtSinDatos.visibility = View.GONE
 
         btnRegresar.setOnClickListener { finish() }
 
@@ -76,11 +73,11 @@ class AdminDashboardActivity : AppCompatActivity() {
             startActivity(Intent(this, AdminProductosActivity::class.java))
         }
 
-        cargarTopProductos()
         btnIrAdminUsuarios.setOnClickListener {
             startActivity(Intent(this, AdminUsuariosActivity::class.java))
         }
 
+        cargarTopProductos()
     }
 
     private fun cargarTopProductos() {
@@ -88,7 +85,6 @@ class AdminDashboardActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { snapshot ->
 
-                // 1. Si no hay órdenes en Firestore
                 if (snapshot.isEmpty) {
                     txtSinDatos.visibility = View.VISIBLE
                     cardTop1.visibility = View.GONE
@@ -96,10 +92,8 @@ class AdminDashboardActivity : AppCompatActivity() {
                     return@addOnSuccessListener
                 }
 
-                // 2. Convertir documentos a objetos Orden
                 val listaOrdenes = snapshot.toObjects(Orden::class.java)
 
-                // 3. Mapa producto -> (cantTotal, totalVendido)
                 val mapaVentas = mutableMapOf<String, Pair<Int, Double>>()
 
                 for (orden in listaOrdenes) {
@@ -116,7 +110,6 @@ class AdminDashboardActivity : AppCompatActivity() {
                     }
                 }
 
-                // 4. Si el mapa quedó vacío
                 if (mapaVentas.isEmpty()) {
                     txtSinDatos.visibility = View.VISIBLE
                     cardTop1.visibility = View.GONE
@@ -128,12 +121,10 @@ class AdminDashboardActivity : AppCompatActivity() {
                 cardTop1.visibility = View.VISIBLE
                 cardTop2.visibility = View.VISIBLE
 
-                // 5. Ordenar por unidades vendidas (desc) y tomar top 2
                 val topProductos = mapaVentas.entries
                     .sortedByDescending { it.value.first }
                     .take(2)
 
-                // Top 1
                 val top1 = topProductos.getOrNull(0)
                 if (top1 != null) {
                     val (cant, totalVendido) = top1.value
@@ -146,7 +137,6 @@ class AdminDashboardActivity : AppCompatActivity() {
                     txtTop1Total.text = ""
                 }
 
-                // Top 2
                 val top2 = topProductos.getOrNull(1)
                 if (top2 != null) {
                     val (cant2, totalVendido2) = top2.value

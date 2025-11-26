@@ -12,6 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TiendaRegalos">
+        <activity android:name=".AdminUsuariosActivity"
+            android:exported="false" />
         <activity android:name=".AdminProductosActivity"
             android:exported="false" />
         <activity android:name=".AdminDashboardActivity"
@@ -20,6 +22,10 @@
             android:exported="false"/>
         <activity
             android:name=".CompraConfirmadaActivity"
+            android:exported="false" />
+        <activity android:name=".Planes"
+            android:exported="false"/>
+        <activity android:name=".Torneos"
             android:exported="false" />
         <activity
             android:name=".FavoritosActivity"

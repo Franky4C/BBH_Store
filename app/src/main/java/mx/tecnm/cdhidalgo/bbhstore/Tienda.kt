@@ -70,7 +70,7 @@ class Tienda : AppCompatActivity() {
         rvArtesanias = findViewById(R.id.artesanias_tienda)
 
         btnHistorial = findViewById(R.id.btn_historial_tienda)
-        btnAdmin = findViewById(R.id.btn_admin_tienda)
+//        btnAdmin = findViewById(R.id.btn_admin_tienda)
 
         // Nombre del usuario
         val nombreCompleto = "${usuario.nombre} ${usuario.apaterno} ${usuario.amaterno}"

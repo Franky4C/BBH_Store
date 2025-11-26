@@ -59,17 +59,6 @@
             android:layout_marginStart="4dp"
             android:gravity="center_vertical" />
 
-        <!-- NUEVO: Admin -->
-        <ImageButton
-            android:id="@+id/btn_admin_tienda"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#000000"
-            android:src="@android:drawable/ic_menu_manage"
-            android:padding="10dp"
-            android:contentDescription="Panel administrador" />
-
-
         <ImageButton
             android:id="@+id/btn_favoritos_tienda"
             android:layout_width="46dp"

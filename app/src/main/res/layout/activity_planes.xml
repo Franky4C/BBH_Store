@@ -14,15 +14,12 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- ====================================================== -->
-        <!-- ============ SECCIÓN DE TÍTULO Y RETROCESO =========== -->
-        <!-- ====================================================== -->
+        <!-- SECCIÓN DE TÍTULO Y RETROCESO -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp">
 
-            <!-- BOTÓN DE REGRESO CON EL ID CORRECTO -->
             <ImageButton
                 android:id="@+id/btn_regresar_planes"
                 android:layout_width="48dp"
@@ -34,7 +31,6 @@
                 android:src="@drawable/icon_04"
                 app:tint="@android:color/white" />
 
-            <!-- Título de la pantalla -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,12 +40,9 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:gravity="center" />
-
         </RelativeLayout>
 
-        <!-- ====================================================== -->
-        <!-- ============ TARJETA PLAN GENERAL ============ -->
-        <!-- ====================================================== -->
+        <!-- TARJETA PLAN GENERAL -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="350dp"
@@ -63,26 +56,26 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <!-- 1. LA IMAGEN DE FONDO -->
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@drawable/pexels_cristian_rojas_8809988"
                     android:alpha=".6"/>
-                <!-- 2. EL GRADIENTE PARA LEGIBILIDAD -->
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/gradient_overlay" />
-                <!-- 3. EL CONTENIDO FLOTANTE -->
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:orientation="vertical"
                     android:padding="20dp">
-                    <!-- TÍTULO Y PRECIO -->
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -116,9 +109,8 @@
                             android:shadowDx="2"
                             android:shadowDy="2"
                             android:shadowRadius="3"/>
-
                     </RelativeLayout>
-                    <!-- LISTA DE BENEFICIOS -->
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -130,28 +122,11 @@
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="2"/>
-                    <!-- BOTÓN DE COMPRA -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnComprarGeneral"
-                        style="@style/Widget.Material3.Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:paddingTop="12dp"
-                        android:paddingBottom="12dp"
-                        android:text="Comprar Paquete"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        app:backgroundTint="#4CAF59"
-                        app:cornerRadius="8dp" />
                 </LinearLayout>
-
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- ====================================================== -->
-        <!-- ============ TARJETA PLAN ESTUDIANTES ============ -->
-        <!-- ====================================================== -->
+        <!-- TARJETA PLAN ESTUDIANTES -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="350dp"
@@ -165,26 +140,26 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <!-- 1. LA IMAGEN DE FONDO -->
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@drawable/pexels_sabel_blanco_662810_1544774"
                     android:alpha=".6"/>
-                <!-- 2. EL GRADIENTE PARA LEGIBILIDAD -->
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/gradient_overlay" />
-                <!-- 3. EL CONTENIDO FLOTANTE -->
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:orientation="vertical"
                     android:padding="20dp">
-                    <!-- TÍTULO Y PRECIO -->
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -218,9 +193,8 @@
                             android:shadowDx="2"
                             android:shadowDy="2"
                             android:shadowRadius="3"/>
-
                     </RelativeLayout>
-                    <!-- LISTA DE BENEFICIOS -->
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -232,28 +206,11 @@
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="2"/>
-                    <!-- BOTÓN DE COMPRA -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnComprarEstudiantes"
-                        style="@style/Widget.Material3.Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:paddingTop="12dp"
-                        android:paddingBottom="12dp"
-                        android:text="Comprar Paquete"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        app:backgroundTint="#4CAF50"
-                        app:cornerRadius="8dp"/>
                 </LinearLayout>
-
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- ====================================================== -->
-        <!-- ============ TARJETA PLAN 8 DIAS ============ -->
-        <!-- ====================================================== -->
+        <!-- TARJETA PLAN 8 DIAS -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="350dp"
@@ -266,26 +223,26 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <!-- 1. LA IMAGEN DE FONDO -->
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@drawable/pexels_pavel_danilyuk_6295818"
                     android:alpha=".6"/>
-                <!-- 2. EL GRADIENTE PARA LEGIBILIDAD -->
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/gradient_overlay" />
-                <!-- 3. EL CONTENIDO FLOTANTE -->
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:orientation="vertical"
                     android:padding="20dp">
-                    <!-- TÍTULO Y PRECIO -->
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -319,9 +276,8 @@
                             android:shadowDx="2"
                             android:shadowDy="2"
                             android:shadowRadius="3"/>
-
                     </RelativeLayout>
-                    <!-- LISTA DE BENEFICIOS (aquí puedes ajustar los beneficios) -->
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -333,22 +289,7 @@
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="2"/>
-                    <!-- BOTÓN DE COMPRA -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnComprar8Dias"
-                        style="@style/Widget.Material3.Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:paddingTop="12dp"
-                        android:paddingBottom="12dp"
-                        android:text="Comprar Paquete"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        app:backgroundTint="#4CAF50"
-                        app:cornerRadius="8dp"/>
                 </LinearLayout>
-
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>
 
