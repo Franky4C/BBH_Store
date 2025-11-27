@@ -1,4 +1,7 @@
 <resources>
+    <!-- ============================================= -->
+    <!-- ==== STRINGS PARA ACTIVITY_LOGIN ==== -->
+    <!-- ============================================= -->
     <string name="app_name">TiendaRegalos</string>
     <string name="texto01">Bienvenido!!</string>
     <string name="texto02">Ingresar</string>
@@ -15,4 +18,49 @@
     <string name="hint03">Nombre</string>
     <string name="hint04">Apellido Paterno</string>
     <string name="hint05">Apellido Materno</string>
+
+    <!-- ============================================= -->
+    <!-- ==== STRINGS PARA ACTIVITY_MAIN ==== -->
+    <!-- ============================================= -->
+    <string name="main_welcome_greeting">No te quedes quieto</string>
+    <string name="main_welcome_action">¡Boxea!</string>
+
+    <string name="main_button_shop">Tienda</string>
+    <string name="main_button_plans">Planes</string>
+    <string name="main_button_tournaments">Torneos</string>
+
+    <string name="main_schedules_title">Horarios:</string>
+    <string name="main_schedules_details">Lunes - Viernes 6:00 AM - 10:00 PM\nSábado y Domingo 7:00 AM - 4:00 PM</string>
+    <string name="main_invitation">¡Ven a entrenar con nosotros!</string>
+
+    <string name="main_admin_panel_button">Panel Admin</string>
+
+    <!-- ======================================= -->
+    <!-- ====  STRINGS PARA TIENDA ==== -->
+    <!-- ======================================= -->
+    <string name="tienda_title">Tienda</string>
+    <string name="tienda_search_hint">Buscar producto...</string>
+
+    <!-- ======================================= -->
+    <!-- ====    STRINGS PARA PLANES   ==== -->
+    <!-- ======================================= -->
+    <string name="planes_title">Planes Disponibles</string>
+    <string name="planes_general_title">GENERAL</string>
+    <string name="planes_general_price">$500 / MES</string>
+    <string name="planes_general_features">• Personal Training\n• Body Building\n• Cardio\n• Clases Personalizadas</string>
+
+    <string name="planes_student_title">ESTUDIANTES</string>
+    <string name="planes_student_price">$400 / MES</string>
+    <!-- Las características son las mismas, podemos reutilizar el string -->
+
+    <string name="planes_8days_title">8 DÍAS AL MES</string>
+    <string name="planes_8days_price">$310 / MES</string>
+    <string name="planes_8days_features">• Acceso 8 días al mes\n• Body Building\n• Cardio</string>
+
+    <!-- ========================================== -->
+    <!-- ====    STRINGS PARA TORNEOS   ==== -->
+    <!-- ========================================== -->
+    <string name="torneos_title">Próximos Torneos</string>
+
+
 </resources>

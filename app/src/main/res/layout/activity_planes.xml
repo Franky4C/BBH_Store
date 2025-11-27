@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- 1. CAMBIO ESTRUCTURAL: El contenedor raíz ahora es un RelativeLayout. -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,290 +9,313 @@
     android:background="#191919"
     tools:context=".Planes">
 
-    <LinearLayout
+    <!-- 2. TU DISEÑO ORIGINAL (INTACTO): Tu ScrollView con todo el contenido. -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <!-- SECCIÓN DE TÍTULO Y RETROCESO -->
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <ImageButton
-                android:id="@+id/btn_regresar_planes"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Regresar al menú principal"
-                android:src="@drawable/icon_04"
-                app:tint="@android:color/white" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- SECCIÓN DE TÍTULO Y RETROCESO (Título ahora usa @string) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="Planes Disponibles"
-                android:textColor="@android:color/white"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:gravity="center" />
-        </RelativeLayout>
+                android:layout_marginBottom="16dp">
 
-        <!-- TARJETA PLAN GENERAL -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="#33FFFFFF"
-            app:cardBackgroundColor="#212121">
+                <ImageButton
+                    android:id="@+id/btn_regresar_planes"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Regresar al menú principal"
+                    android:src="@drawable/icon_04"
+                    app:tint="@android:color/white" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/pexels_cristian_rojas_8809988"
-                    android:alpha=".6"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/gradient_overlay" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+                    android:layout_centerInParent="true"
+                    android:text="@string/planes_title"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+            </RelativeLayout>
 
-                    <RelativeLayout
+            <!-- TARJETA PLAN GENERAL (Textos ahora usan @string) -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#212121"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                app:strokeColor="#33FFFFFF"
+                app:strokeWidth="1dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha=".6"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/pexels_cristian_rojas_8809988" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_overlay" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp">
+                        android:layout_alignParentBottom="true"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:id="@+id/plan_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:shadowColor="#000000"
+                                android:shadowDx="2"
+                                android:shadowDy="2"
+                                android:shadowRadius="3"
+                                android:text="@string/planes_general_title"
+                                android:textColor="#FFFFFF"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/plan_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:shadowColor="#000000"
+                                android:shadowDx="2"
+                                android:shadowDy="2"
+                                android:shadowRadius="3"
+                                android:text="@string/planes_general_price"
+                                android:textColor="#FDF1C5"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
 
                         <TextView
-                            android:id="@+id/plan_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:text="GENERAL"
-                            android:textColor="#FFFFFF"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
+                            android:lineSpacingExtra="6dp"
                             android:shadowColor="#000000"
-                            android:shadowDx="2"
-                            android:shadowDy="2"
-                            android:shadowRadius="3"/>
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="2"
+                            android:text="@string/planes_general_features"
+                            android:textColor="#E0E0E0"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                        <TextView
-                            android:id="@+id/plan_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:text="$500 / MES"
-                            android:textColor="#FDF1C5"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:shadowColor="#000000"
-                            android:shadowDx="2"
-                            android:shadowDy="2"
-                            android:shadowRadius="3"/>
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:lineSpacingExtra="6dp"
-                        android:text="• Personal Training\n• Body Building\n• Cardio\n• Clases Personalizadas"
-                        android:textColor="#E0E0E0"
-                        android:textSize="15sp"
-                        android:shadowColor="#000000"
-                        android:shadowDx="1"
-                        android:shadowDy="1"
-                        android:shadowRadius="2"/>
-                </LinearLayout>
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- TARJETA PLAN ESTUDIANTES -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="#33FFFFFF"
-            app:cardBackgroundColor="#212121">
-
-            <RelativeLayout
+            <!-- TARJETA PLAN ESTUDIANTES (Textos ahora usan @string) -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="350dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#212121"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                app:strokeColor="#33FFFFFF"
+                app:strokeWidth="1dp">
 
-                <ImageView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/pexels_sabel_blanco_662810_1544774"
-                    android:alpha=".6"/>
+                    android:layout_height="match_parent">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/gradient_overlay" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha=".6"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/pexels_sabel_blanco_662810_1544774" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_overlay" />
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp">
+                        android:layout_alignParentBottom="true"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:id="@+id/plan_title1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:shadowColor="#000000"
+                                android:shadowDx="2"
+                                android:shadowDy="2"
+                                android:shadowRadius="3"
+                                android:text="@string/planes_student_title"
+                                android:textColor="#FFFFFF"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/plan_price1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:shadowColor="#000000"
+                                android:shadowDx="2"
+                                android:shadowDy="2"
+                                android:shadowRadius="3"
+                                android:text="@string/planes_student_price"
+                                android:textColor="#FDF1C5FF"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
 
                         <TextView
-                            android:id="@+id/plan_title1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:text="ESTUDIANTES"
-                            android:textColor="#FFFFFF"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
+                            android:lineSpacingExtra="6dp"
                             android:shadowColor="#000000"
-                            android:shadowDx="2"
-                            android:shadowDy="2"
-                            android:shadowRadius="3"/>
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="2"
+                            android:text="@string/planes_general_features"
+                            android:textColor="#E0E0E0"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                        <TextView
-                            android:id="@+id/plan_price1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:text="$400 / MES"
-                            android:textColor="#FDF1C5FF"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:shadowColor="#000000"
-                            android:shadowDx="2"
-                            android:shadowDy="2"
-                            android:shadowRadius="3"/>
-                    </RelativeLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:lineSpacingExtra="6dp"
-                        android:text="• Personal Training\n• Body Building\n• Cardio\n• Clases Personalizadas"
-                        android:textColor="#E0E0E0"
-                        android:textSize="15sp"
-                        android:shadowColor="#000000"
-                        android:shadowDx="1"
-                        android:shadowDy="1"
-                        android:shadowRadius="2"/>
-                </LinearLayout>
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- TARJETA PLAN 8 DIAS -->
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="350dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="#33FFFFFF"
-            app:cardBackgroundColor="#212121">
-
-            <RelativeLayout
+            <!-- TARJETA PLAN 8 DIAS (Textos ahora usan @string) -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="350dp"
+                app:cardBackgroundColor="#212121"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                app:strokeColor="#33FFFFFF"
+                app:strokeWidth="1dp">
 
-                <ImageView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/pexels_pavel_danilyuk_6295818"
-                    android:alpha=".6"/>
+                    android:layout_height="match_parent">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/gradient_overlay" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha=".6"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/pexels_pavel_danilyuk_6295818" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_overlay" />
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp">
+                        android:layout_alignParentBottom="true"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:id="@+id/plan_title2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:shadowColor="#000000"
+                                android:shadowDx="2"
+                                android:shadowDy="2"
+                                android:shadowRadius="3"
+                                android:text="@string/planes_8days_title"
+                                android:textColor="#FFFFFF"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/plan_price2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:shadowColor="#000000"
+                                android:shadowDx="2"
+                                android:shadowDy="2"
+                                android:shadowRadius="3"
+                                android:text="@string/planes_8days_price"
+                                android:textColor="#FDF1C5FF"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
 
                         <TextView
-                            android:id="@+id/plan_title2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:text="8 DIAS AL MES"
-                            android:textColor="#FFFFFF"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
+                            android:lineSpacingExtra="6dp"
                             android:shadowColor="#000000"
-                            android:shadowDx="2"
-                            android:shadowDy="2"
-                            android:shadowRadius="3"/>
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="2"
+                            android:text="@string/planes_8days_features"
+                            android:textColor="#E0E0E0"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                        <TextView
-                            android:id="@+id/plan_price2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:text="$310 / MES"
-                            android:textColor="#FDF1C5FF"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:shadowColor="#000000"
-                            android:shadowDx="2"
-                            android:shadowDy="2"
-                            android:shadowRadius="3"/>
-                    </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:lineSpacingExtra="6dp"
-                        android:text="• Acceso 8 días al mes\n• Body Building\n• Cardio"
-                        android:textColor="#E0E0E0"
-                        android:textSize="15sp"
-                        android:shadowColor="#000000"
-                        android:shadowDx="1"
-                        android:shadowDy="1"
-                        android:shadowRadius="2"/>
-                </LinearLayout>
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
+    <!-- 3. EL ÚNICO ELEMENTO NUEVO AÑADIDO: BOTÓN DE IDIOMA -->
+    <ImageButton
+        android:id="@+id/btnChangeLanguage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Change Language"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/translation"
+        app:tint="@android:color/white" />
 
-    </LinearLayout>
-</ScrollView>
+</RelativeLayout>

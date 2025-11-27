@@ -16,5 +16,50 @@
     <string name="hint03">First Name</string>
     <string name="hint04">Paternal Last Name</string>
     <string name="hint05">Maternal Last Name</string>
+
+    <!-- ============================================= -->
+    <!-- ==== STRINGS FOR ACTIVITY_MAIN ==== -->
+    <!-- ============================================= -->
+    <string name="main_welcome_greeting">Don\'t stand still</string> <!-- La comilla se "escapa" -->
+    <string name="main_welcome_action">Box!</string>
+
+    <string name="main_button_shop">Shop</string>
+    <string name="main_button_plans">Plans</string>
+    <string name="main_button_tournaments">Tournaments</string>
+
+    <string name="main_schedules_title">Schedules:</string>
+    <string name="main_schedules_details">Monday - Friday 6:00 AM - 10:00 PM\nSaturday and Sunday 7:00 AM - 4:00 PM</string>
+    <string name="main_invitation">Come train with us!</string>
+
+    <string name="main_admin_panel_button">Admin Panel</string>
+
+
+    <!-- ======================================= -->
+    <!-- ====    STRINGS FOR SHOP     ==== -->
+    <!-- ======================================= -->
+    <string name="tienda_title">Shop</string>
+    <string name="tienda_search_hint">Search product...</string>
+
+    <!-- ======================================= -->
+    <!-- ====    STRINGS FOR PLANS      ==== -->
+    <!-- ======================================= -->
+    <string name="planes_title">Available Plans</string>
+    <string name="planes_general_title">GENERAL</string>
+    <string name="planes_general_price">$500 / MONTH</string>
+    <string name="planes_general_features">• Personal Training\n• Body Building\n• Cardio\n• Custom Classes</string>
+
+    <string name="planes_student_title">STUDENTS</string>
+    <string name="planes_student_price">$400 / MONTH</string>
+
+    <string name="planes_8days_title">8 DAYS A MONTH</string>
+    <string name="planes_8days_price">$310 / MONTH</string>
+    <string name="planes_8days_features">• 8-day access per month\n• Body Building\n• Cardio</string>
+
+
+    <!-- ========================================== -->
+    <!-- ====     STRINGS FOR TOURNAMENTS   ==== -->
+    <!-- ========================================== -->
+    <string name="torneos_title">Upcoming Tournaments</string>
+
 </resources>
 

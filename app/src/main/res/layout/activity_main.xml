@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 1. Añadimos el ID 'main' aquí y los xmlns que faltaban -->
-<ScrollView
+<!-- =============================================================== -->
+<!-- ==== 1. CAMBIO PRINCIPAL: El nuevo contenedor raíz es un RelativeLayout ==== -->
+<!-- Esto nos permite poner el botón de idioma "flotando" en la esquina, -->
+<!-- y mantener tu ScrollView original intacto debajo.                -->
+<!-- =============================================================== -->
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,256 +12,286 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#191919"
-    android:fillViewport="true"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <!-- =============================================================== -->
+    <!-- ==== 2. TU SCROLLVIEW ORIGINAL: Sin cambios en su estructura ==== -->
+    <!-- Todo tu diseño se mantiene exactamente igual, dentro de este ScrollView. -->
+    <!-- =============================================================== -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <!-- LOGO -->
-        <ImageView
-            android:id="@+id/imgLogoInicio"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:src="@drawable/logo"
-            android:contentDescription="Logo de la aplicación" />
-
-        <!-- Textos de Bienvenida -->
-        <TextView
-            android:id="@+id/txtMotivacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="24dp"
-            android:text="No te quedes quieto"
-            android:textColor="#A8A8A8"
-            android:textSize="25dp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/txtBoxea"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:text="¡Boxea!"
-            android:textColor="#8AFF8E"
-            android:textSize="28dp"
-            android:textStyle="bold"/>
-
-        <!-- Botón Tienda (MEJORADO) -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginTop="24dp">
-
-            <ImageButton
-                android:id="@+id/btnTienda"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:contentDescription="Ir a la Tienda"
-                android:scaleType="centerCrop"
-                android:src="@drawable/pexels_pavel_danilyuk_6296117"
-                android:alpha="0.85"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/overlay_button_shadow" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:elevation="4dp"
-                android:shadowColor="#000000"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="4"
-                android:text="Tienda"
-                android:textColor="@android:color/white"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-
-        <!-- Botón Planes (MEJORADO) -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginTop="16dp">
-
-            <ImageButton
-                android:id="@+id/btnPlanes"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:contentDescription="Ver Planes"
-                android:scaleType="centerCrop"
-                android:src="@drawable/pexels_cristian_rojas_8809988"
-                android:alpha="0.85"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/overlay_button_shadow" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:elevation="4dp"
-                android:shadowColor="#000000"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="4"
-                android:text="Planes"
-                android:textColor="@android:color/white"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-
-        <!-- Botón Torneos (MEJORADO) -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginTop="16dp">
-
-            <ImageButton
-                android:id="@+id/btnTorneo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:contentDescription="Ver Torneos"
-                android:scaleType="centerCrop"
-                android:src="@drawable/pexels_franco_monsalvo_252430633_26891610"
-                android:alpha="0.85"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/overlay_button_shadow" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:elevation="4dp"
-                android:shadowColor="#000000"
-                android:shadowDx="2"
-                android:shadowDy="2"
-                android:shadowRadius="4"
-                android:text="Torneos"
-                android:textColor="@android:color/white"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
-
-        <!-- Horarios -->
-        <TextView
-            android:id="@+id/txtHorarios"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Horarios:"
-            android:textColor="#A8A8A8"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:id="@+id/txtDias"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:lineSpacingExtra="4dp"
-            android:text="Lunes - Viernes 6:00 AM - 10:00 PM\nSábado y Domingo 7:00 AM - 4:00 PM"
-            android:textColor="#A8A8A8"
-            android:textSize="16sp"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:id="@+id/Invitacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="24dp"
-            android:text="¡Ven a entrenar con nosotros!"
-            android:textColor="#FFFFFF"
-            android:textSize="25dp"
-            android:textStyle="bold" />
-
-        <!-- Redes Sociales (MEJORADO) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <!-- Convertidos a ImageButton para el efecto visual -->
-            <ImageButton
-                android:id="@+id/iconInstagram"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                android:background="@drawable/bg_social_icon"
-                android:contentDescription="Instagram"
-                android:padding="8dp"
-                android:alpha="0.9"
-                android:src="@drawable/instagran_logo" />
+            <!-- LOGO: Añadimos un margen para que no choque con el botón de idioma -->
+            <ImageView
+                android:id="@+id/imgLogoInicio"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="32dp"
+                android:src="@drawable/logo"
+                android:contentDescription="Logo de la aplicación" />
 
-            <ImageButton
-                android:id="@+id/iconFacebook"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:background="@drawable/bg_social_icon"
-                android:contentDescription="Facebook"
-                android:padding="8dp"
-                android:alpha="0.9"
-                android:src="@drawable/facebool" />
+            <!-- Textos de Bienvenida (AHORA USAN @string) -->
+            <TextView
+                android:id="@+id/txtMotivacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:text="@string/main_welcome_greeting"
+                android:textColor="#A8A8A8"
+                android:textSize="25dp"
+                android:textStyle="bold"/>
 
-            <ImageButton
-                android:id="@+id/iconWhatsapp"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                android:background="@drawable/bg_social_icon"
-                android:contentDescription="Whatsapp"
-                android:padding="8dp"
-                android:alpha="0.9"
-                android:src="@drawable/whatsapp_tile_logo_icon_169898" />
+            <TextView
+                android:id="@+id/txtBoxea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:text="@string/main_welcome_action"
+                android:textColor="#8AFF8E"
+                android:textSize="28dp"
+                android:textStyle="bold"/>
 
-        </LinearLayout>
+            <!-- Botón Tienda (AHORA USA @string) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="24dp">
 
-            <!-- Botón Panel Admin (solo para admins, se controla en código) -->
+                <ImageButton
+                    android:id="@+id/btnTienda"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Ir a la Tienda"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/pexels_pavel_danilyuk_6296117"
+                    android:alpha="0.85"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/overlay_button_shadow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:elevation="4dp"
+                    android:shadowColor="#000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="4"
+                    android:text="@string/main_button_shop"
+                    android:textColor="@android:color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <!-- Botón Planes (AHORA USA @string) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="16dp">
+
+                <ImageButton
+                    android:id="@+id/btnPlanes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Ver Planes"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/pexels_cristian_rojas_8809988"
+                    android:alpha="0.85"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/overlay_button_shadow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:elevation="4dp"
+                    android:shadowColor="#000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="4"
+                    android:text="@string/main_button_plans"
+                    android:textColor="@android:color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <!-- Botón Torneos (AHORA USA @string) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="16dp">
+
+                <ImageButton
+                    android:id="@+id/btnTorneo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="Ver Torneos"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/pexels_franco_monsalvo_252430633_26891610"
+                    android:alpha="0.85"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/overlay_button_shadow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:elevation="4dp"
+                    android:shadowColor="#000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="4"
+                    android:text="@string/main_button_tournaments"
+                    android:textColor="@android:color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <!-- Horarios (AHORA USA @string) -->
+            <TextView
+                android:id="@+id/txtHorarios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/main_schedules_title"
+                android:textColor="#A8A8A8"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/txtDias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/main_schedules_details"
+                android:textColor="#A8A8A8"
+                android:textSize="16sp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/Invitacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="24dp"
+                android:text="@string/main_invitation"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <!-- Redes Sociales (sin cambios en estructura, solo en IDs si es necesario) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/iconInstagram"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/bg_social_icon"
+                    android:contentDescription="Instagram"
+                    android:padding="8dp"
+                    android:alpha="0.9"
+                    android:src="@drawable/instagran_logo" />
+
+                <ImageButton
+                    android:id="@+id/iconFacebook"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/bg_social_icon"
+                    android:contentDescription="Facebook"
+                    android:padding="8dp"
+                    android:alpha="0.9"
+                    android:src="@drawable/facebool" />
+
+                <ImageButton
+                    android:id="@+id/iconWhatsapp"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:background="@drawable/bg_social_icon"
+                    android:contentDescription="Whatsapp"
+                    android:padding="8dp"
+                    android:alpha="0.9"
+                    android:src="@drawable/whatsapp_tile_logo_icon_169898" />
+            </LinearLayout>
+
+            <!-- Botón Panel Admin (AHORA USA @string) -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnPanelAdmin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Panel Admin"
+                android:text="@string/main_admin_panel_button"
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 android:textColor="@android:color/white"
                 android:backgroundTint="#FF9800"
                 android:visibility="gone"/>
 
-        <!-- Botón Cerrar sesión -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCerrarSesion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Cerrar sesión"
-            android:textAllCaps="false"
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:backgroundTint="#F44336"/>
+            <!-- Botón Cerrar sesión (AHORA USA @string) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCerrarSesion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/texto09"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textColor="@android:color/white"
+                android:backgroundTint="#F44336"/>
 
-    </LinearLayout>
-</ScrollView>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- =============================================================== -->
+    <!-- ==== 3. NUEVO BOTÓN DE IDIOMA: Flotando en la esquina ==== -->
+    <!-- Colocado DENTRO del RelativeLayout pero FUERA del ScrollView, -->
+    <!-- así se queda fijo y no se mueve con el scroll.               -->
+    <!-- =============================================================== -->
+    <ImageButton
+        android:id="@+id/btnChangeLanguage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Change Language"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/translation"
+        app:tint="@android:color/white" />
+
+</RelativeLayout>

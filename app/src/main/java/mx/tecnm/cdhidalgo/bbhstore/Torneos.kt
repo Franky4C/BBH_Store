@@ -1,56 +1,81 @@
-package mx.tecnm.cdhidalgo.bbhstore
+package mx.tecnm.cdhidalgo.bbhstore // O el nombre de tu paquete
 
+// 1. IMPORTACIONES AÑADIDAS
+import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.ImageButton
-import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import mx.tecnm.cdhidalgo.bbhstore.dataclass.Usuario
+import java.util.Locale
 
-// 1. Convierte la clase en una Activity que hereda de AppCompatActivity
 class Torneos : AppCompatActivity() {
 
-    // Guardamos el objeto usuario, aunque no lo usemos ahora
-    private lateinit var usuario: Usuario
+    // 2. DECLARACIÓN DEL BOTÓN DE IDIOMA
+    private lateinit var btnChangeLanguag: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 2. Vincula esta clase de Kotlin con su archivo de diseño XML
+        // 3. CARGA EL IDIOMA GUARDADO ANTES DE MOSTRAR LA VISTA
+        loadLocale()
+
         setContentView(R.layout.activity_torneos)
 
-        // (Opcional pero recomendado) Configuración para que el layout ocupe toda la pantalla
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
-        // Recibimos los datos del usuario.
-        if (intent.hasExtra("usuario")) {
-            usuario = intent.getParcelableExtra("usuario")!!
-        } else {
-            // Si no llegan los datos, cerramos la actividad para evitar errores.
-            finish()
-            return
-        }
-
-        // 3. LÓGICA DEL BOTÓN "REGRESAR"
-        // Asegúrate de que tu botón en activity_torneos.xml tenga el id "btn_regresar_torneos"
+        // Tu código de inicialización existente
         val btnRegresar: ImageButton = findViewById(R.id.btn_regresar_torneos)
         btnRegresar.setOnClickListener {
-            // La forma CORRECTA de "volver atrás": simplemente cierra la actividad actual.
-            finish()
+            finish() // Cierra esta actividad y vuelve a la anterior
         }
 
-        // 4. MANEJO DEL BOTÓN "ATRÁS" DEL SISTEMA (Gesto o botón de navegación)
-        // Esto asegura que el comportamiento sea consistente y predecible.
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                // También llamamos a finish() para cerrar la actividad.
-                finish()
-            }
-        })
+        // 4. INICIALIZA EL BOTÓN DE IDIOMA Y ASÍGNALE SU FUNCIÓN
+        btnChangeLanguag = findViewById(R.id.btnChangeLanguag)
+
+        btnChangeLanguag.setOnClickListener {
+            showChangeLanguageDialog()
+        }
+    }
+
+    // 5. AÑADE LAS TRES FUNCIONES DE IDIOMA
+    private fun showChangeLanguageDialog() {
+        val languages = arrayOf("Español", "English")
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Seleccionar Idioma / Select Language")
+        builder.setSingleChoiceItems(languages, -1) { dialog, which ->
+            val langCode = if (which == 0) "es" else "en"
+            setLocale(langCode)
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun setLocale(langCode: String) {
+        val prefs = getSharedPreferences("Settings", MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.putString("My_Lang", langCode)
+        editor.apply()
+
+        // Recarga esta actividad para aplicar los cambios de idioma
+        val intent = Intent(this, Torneos::class.java)
+        // Si 'Torneos' necesita datos de la actividad anterior (como el usuario),
+        // pásalos aquí de nuevo. Ejemplo:
+        // intent.putExtra("usuario", getIntent().getParcelableExtra("usuario"))
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        finish()
+    }
+
+    private fun loadLocale() {
+        val prefs = getSharedPreferences("Settings", MODE_PRIVATE)
+        val language = prefs.getString("My_Lang", "") ?: ""
+
+        if (language.isNotEmpty()) {
+            val locale = Locale(language)
+            Locale.setDefault(locale)
+            val config = Configuration()
+            config.setLocale(locale)
+            baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
+        }
     }
 }
