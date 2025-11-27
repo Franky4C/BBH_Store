@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<!-- 1. CAMBIO IMPORTANTE:
+    El nuevo contenedor raíz es un RelativeLayout.
+    Esto nos permite poner el botón de idioma "flotando" en la esquina,
+    y mantener tu ScrollView original intacto debajo.
+-->
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,201 +12,226 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#121212"
-    android:fillViewport="true"
     tools:context=".Login">
 
-    <LinearLayout
+    <!-- 2. TU SCROLLVIEW ORIGINAL
+        Todo tu diseño se mantiene exactamente igual, dentro de este ScrollView.
+        No hemos cambiado nada de su contenido, solo lo hemos envuelto.
+    -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp"
-        android:gravity="center_vertical">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <!-- 1. SECCIÓN DEL LOGO Y TÍTULO -->
-        <ImageView
-            android:id="@+id/logo_login"
-            android:layout_width="231dp"
-            android:layout_height="122dp"
-            android:src="@drawable/logo"
-            android:layout_gravity="center_horizontal"
-            android:transitionName="logo_trans" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="32dp"
-            android:fontFamily="sans-serif-condensed-light"
-            android:letterSpacing="0.05"
-            android:text="BIENVENIDO DE VUELTA"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="22sp"/>
-
-        <!-- 2. CAMPOS DE ENTRADA (EMAIL Y CONTRASEÑA) -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/correo_login"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint01"
-            android:textColorHint="#A0A0A0"
-            app:boxStrokeColor="#4CAF50"
-            app:hintTextColor="#4CAF50">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:textColor="@color/white"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password_login"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="@string/hint02"
-            android:textColorHint="#A0A0A0"
-            app:boxStrokeColor="#4CAF50"
-            app:hintTextColor="#4CAF50"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="#A0A0A0">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:textColor="@color/white"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Botón de Olvidar Contraseña (alineado a la derecha) -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_olvidar"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:minHeight="48dp"
-            android:text="@string/texto03"
-            android:textColor="#C5C3C3"
-            android:textSize="14sp"/>
-
-        <!-- 3. BOTÓN PRINCIPAL DE LOGIN -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_login"
-            style="@style/Widget.Material3.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:paddingVertical="12dp"
-            android:text="@string/texto02"
-            android:textSize="16sp"
-            app:backgroundTint="#4CAF50"
-            app:cornerRadius="8dp"/>
-
-        <!-- LÍNEA SEPARADORA -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="32dp"
-            android:background="#44FFFFFF"/>
-
-        <!-- 4. ENLACE PARA CREAR CUENTA NUEVA -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="24dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center_vertical">
+
+            <!-- SECCIÓN DEL LOGO Y TÍTULO -->
+            <!-- 4. CAMBIO MENOR: Añadido un margen superior para que el logo
+                no quede pegado al nuevo botón de idioma. -->
+            <ImageView
+                android:id="@+id/logo_login"
+                android:layout_width="231dp"
+                android:layout_height="122dp"
+                android:src="@drawable/logo"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="32dp"
+                android:transitionName="logo_trans" />
+
+            <!--
+                5. BUENA PRÁCTICA (APLICADA):
+                He reemplazado los textos fijos ("hardcoded") por referencias a tu
+                archivo strings.xml para que el cambio de idioma funcione.
+            -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:fontFamily="sans-serif-condensed-light"
+                android:letterSpacing="0.05"
+                android:text="@string/texto01"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="22sp"/>
+
+            <!-- CAMPOS DE ENTRADA (EMAIL Y CONTRASEÑA) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/correo_login"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint01"
+                android:textColorHint="#A0A0A0"
+                app:boxStrokeColor="#4CAF50"
+                app:hintTextColor="#4CAF50">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/white"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password_login"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/hint02"
+                android:textColorHint="#A0A0A0"
+                app:boxStrokeColor="#4CAF50"
+                app:hintTextColor="#4CAF50"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#A0A0A0">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textColor="@color/white"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_olvidar"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:minHeight="48dp"
+                android:text="@string/texto03"
+                android:textColor="#C5C3C3"
+                android:textSize="14sp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_login"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingVertical="12dp"
+                android:text="@string/texto02"
+                android:textSize="16sp"
+                app:backgroundTint="#4CAF50"
+                app:cornerRadius="8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="32dp"
+                android:background="#44FFFFFF"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto06"
+                    android:textColor="#C5C3C3"
+                    android:textSize="16sp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_registrar"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:minHeight="48dp"
+                    android:text="@string/texto04"
+                    android:textColor="#4CAF50"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="¿No tienes una cuenta?"
-                android:textColor="#C5C3C3"
-                android:textSize="16sp"/>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="24dp"
+                android:text="SÍGUENOS EN NUESTRAS REDES"
+                android:textColor="#A0A0A0"
+                android:textSize="12sp"
+                android:fontFamily="sans-serif-condensed"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_registrar"
-                style="@style/Widget.Material3.Button.TextButton"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:minHeight="48dp"
-                android:text="@string/texto04"
-                android:textColor="#4CAF50"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btn_instagram"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginHorizontal="12dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Instagram"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/instagran_logo"
+                    app:tint="#C5C3C3"/>
+
+                <ImageButton
+                    android:id="@+id/btn_facebook"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="12dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Facebook"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/facebool"
+                    app:tint="#C5C3C3"/>
+
+                <ImageButton
+                    android:id="@+id/btn_whatsapp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="12dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="WhatsApp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/whatsapp_tile_logo_icon_169898"
+                    app:tint="#C5C3C3"/>
+            </LinearLayout>
         </LinearLayout>
+    </ScrollView>
 
-        <!-- === INICIA LA NUEVA SECCIÓN DE REDES SOCIALES === -->
+    <!-- 3. EL NUEVO BOTÓN DE IDIOMA
+        Este botón se coloca DENTRO del RelativeLayout pero FUERA del ScrollView.
+        Gracias a esto, se queda fijo en la esquina superior derecha y no se mueve
+        cuando el usuario hace scroll.
+    -->
+    <ImageButton
+        android:id="@+id/btnChangeLanguage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Change Language"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/translation"
+        app:tint="@android:color/white" />
 
-        <!-- Espaciador para empujar la sección hacia abajo -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="24dp"
-            android:text="SÍGUENOS EN NUESTRAS REDES"
-            android:textColor="#A0A0A0"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif-condensed"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
-
-            <!-- Botón de Instagram -->
-            <ImageButton
-                android:id="@+id/btn_instagram"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginHorizontal="12dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Instagram"
-                android:scaleType="fitCenter"
-                android:src="@drawable/instagran_logo"
-                app:tint="#C5C3C3"/>
-
-            <!-- Botón de Facebook -->
-            <ImageButton
-                android:id="@+id/btn_facebook"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginHorizontal="12dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Facebook"
-                android:scaleType="fitCenter"
-                android:src="@drawable/facebool"
-                app:tint="#C5C3C3"/>
-
-            <!-- Botón de WhatsApp -->
-            <ImageButton
-                android:id="@+id/btn_whatsapp"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginHorizontal="12dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="WhatsApp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/whatsapp_tile_logo_icon_169898"
-                app:tint="#C5C3C3"/>
-
-        </LinearLayout>
-        <!-- === TERMINA LA NUEVA SECCIÓN DE REDES SOCIALES === -->
-
-    </LinearLayout>
-</ScrollView>
+</RelativeLayout>

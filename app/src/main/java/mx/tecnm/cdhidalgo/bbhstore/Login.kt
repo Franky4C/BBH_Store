@@ -1,21 +1,20 @@
 package mx.tecnm.cdhidalgo.bbhstore
 
 import android.content.Intent
+import android.content.res.Configuration // 1. IMPORTACIÓN NECESARIA
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 import mx.tecnm.cdhidalgo.bbhstore.dataclass.Usuario
+import java.util.Locale // 2. IMPORTACIÓN NECESARIA
 
 class Login : AppCompatActivity() {
 
@@ -29,18 +28,26 @@ class Login : AppCompatActivity() {
     private lateinit var btnFacebook: ImageButton
     private lateinit var btnWhatsapp: ImageButton
 
+    // 3. NUEVA DECLARACIÓN PARA EL BOTÓN DE IDIOMA
+    private lateinit var btnChangeLanguage: ImageButton
+
     private lateinit var auth: FirebaseAuth
-    private var usuario: Usuario = Usuario()   // usa valores por defecto del data class
+    private var usuario: Usuario = Usuario()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
+        // 4. INVOCAR LA CARGA DE IDIOMA ANTES DE MOSTRAR LA VISTA
+        loadLocale()
+
+        // enableEdgeToEdge() // Se recomienda quitar 'enableEdgeToEdge' y el listener de insets si no lo configuras a fondo,
+        // ya que puede interferir con el layout. Si ves problemas de espaciado, elimínalos.
         setContentView(R.layout.activity_login)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        /* ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-        }
+        }*/
 
         auth = FirebaseAuth.getInstance()
         val db = Firebase.firestore
@@ -55,6 +62,13 @@ class Login : AppCompatActivity() {
         btnFacebook = findViewById(R.id.btn_facebook)
         btnWhatsapp = findViewById(R.id.btn_whatsapp)
 
+        // 5. INICIALIZAR Y CONFIGURAR EL BOTÓN DE IDIOMA
+        btnChangeLanguage = findViewById(R.id.btnChangeLanguage)
+        btnChangeLanguage.setOnClickListener {
+            showChangeLanguageDialog()
+        }
+
+        // --- TU CÓDIGO EXISTENTE DE LOGIN, REGISTRO Y REDES SOCIALES (NO SE CAMBIA NADA) ---
         // LOGIN
         btn_ingresar.setOnClickListener {
             val email = correo.editText?.text.toString().trim()
@@ -68,8 +82,7 @@ class Login : AppCompatActivity() {
             auth.signInWithEmailAndPassword(email, pass)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        // Leer datos del usuario en Firestore
-                        db.collection("bbh_usuarios")   // OJO: usa el mismo nombre que en AdminUsuariosActivity
+                        db.collection("bbh_usuarios")
                             .whereEqualTo("correo", email)
                             .get()
                             .addOnSuccessListener { documents ->
@@ -84,7 +97,6 @@ class Login : AppCompatActivity() {
                                 }
 
                                 val doc = documents.first()
-
                                 usuario = Usuario(
                                     nombre = doc.getString("nombre"),
                                     apaterno = doc.getString("apaterno"),
@@ -95,7 +107,6 @@ class Login : AppCompatActivity() {
                                     bloqueado = doc.getBoolean("bloqueado") ?: false
                                 )
 
-                                // Validar bloqueo
                                 if (usuario.bloqueado) {
                                     Toast.makeText(
                                         this,
@@ -105,8 +116,6 @@ class Login : AppCompatActivity() {
                                     FirebaseAuth.getInstance().signOut()
                                     return@addOnSuccessListener
                                 }
-
-                                // Si todo OK → ir a MainActivity
                                 val intent = Intent(this, MainActivity::class.java)
                                 intent.putExtra("usuario", usuario)
                                 startActivity(intent)
@@ -138,21 +147,19 @@ class Login : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // INSTAGRAM
+        // REDES SOCIALES
         btnInstagram.setOnClickListener {
             val url = "https://www.instagram.com/barracudabbh/reel/DBjZ3aFurbe/"
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
 
-        // FACEBOOK
         btnFacebook.setOnClickListener {
             val url = "https://www.facebook.com/barracudaboxing/videos/1452571902113045/"
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
 
-        // WHATSAPP (número en formato internacional sin 'tel:')
         btnWhatsapp.setOnClickListener {
-            val numeroWhatsapp = "527866880131" // 52 + número
+            val numeroWhatsapp = "527866880131"
             val url = "https://api.whatsapp.com/send?phone=$numeroWhatsapp"
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
@@ -165,5 +172,47 @@ class Login : AppCompatActivity() {
         builder.setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
+    }
+
+    // 6. NUEVAS FUNCIONES PARA MANEJAR EL CAMBIO DE IDIOMA
+    private fun showChangeLanguageDialog() {
+        val languages = arrayOf("Español", "English")
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Seleccionar Idioma / Select Language")
+        builder.setSingleChoiceItems(languages, -1) { dialog, which ->
+            val langCode = if (which == 0) "es" else "en"
+            setLocale(langCode)
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun setLocale(langCode: String) {
+        // Guarda la preferencia de idioma para que la app la recuerde
+        val prefs = getSharedPreferences("Settings", MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.putString("My_Lang", langCode)
+        editor.apply()
+
+        // Recarga la actividad para que se apliquen los cambios de idioma
+        val intent = Intent(this, Login::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        finish()
+    }
+
+    private fun loadLocale() {
+        // Carga la preferencia de idioma que guardamos antes
+        val prefs = getSharedPreferences("Settings", MODE_PRIVATE)
+        val language = prefs.getString("My_Lang", "") ?: ""
+
+        if (language.isNotEmpty()) {
+            val locale = Locale(language)
+            Locale.setDefault(locale)
+            val config = Configuration()
+            config.setLocale(locale)
+            baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
+        }
     }
 }

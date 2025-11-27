@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GiftStore</string>
+    <string name="texto01">Welcome!!</string>
+    <string name="texto02">Log In</string>
+    <string name="texto03">Forgot your password?</string>
+    <string name="texto04">Im not registered!</string>
+    <string name="texto05">Register</string>
+    <string name="texto06">Im Registered!</string>
+    <string name="texto07">Confirm Data</string>
+    <string name="texto08">Correct Data</string>
+    <string name="texto09">Log Out</string>
+    <string name="texto10">Recover Password</string>
+    <string name="hint01">Email Address</string>
+    <string name="hint02">Password</string>
+    <string name="hint03">First Name</string>
+    <string name="hint04">Paternal Last Name</string>
+    <string name="hint05">Maternal Last Name</string>
+</resources>
+

@@ -37,26 +37,26 @@ android {
     }
 }
 
-dependencies {
+// Archivo: app/build.gradle.kts
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.firestore)
-    implementation(libs.androidx.recyclerview)
+// ... (la parte de plugins y android se queda igual) ...
+
+dependencies {
+    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.activity:activity:1.8.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("com.google.firebase:firebase-auth:24.0.1")
+    implementation("com.google.firebase:firebase-firestore:26.0.2")
+    implementation("com.google.firebase:firebase-storage-ktx:21.0.0")
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation("com.google.zxing:core:3.5.1")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
-    implementation("com.google.zxing:core:3.5.1")
 
-    // NUEVO: Firebase Storage
-    implementation("com.google.firebase:firebase-storage-ktx:21.0.0")
-
-    // NUEVO: Glide para cargar imágenes desde URL
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-
+    // --- TERMINA DE COPIAR AQUÍ ---
 }
