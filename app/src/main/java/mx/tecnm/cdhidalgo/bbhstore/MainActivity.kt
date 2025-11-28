@@ -1,8 +1,9 @@
 package mx.tecnm.cdhidalgo.bbhstore
 
-// 1. AÑADE ESTAS IMPORTACIONES NECESARIAS
+// 1. IMPORTACIONES (sin cambios)
 import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
@@ -22,8 +23,19 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var usuario: Usuario
 
-    // 2. DECLARA EL NUEVO BOTÓN DE IDIOMA
+    // 2. DECLARACIÓN DE TODOS LOS BOTONES DE LA CLASE
     private lateinit var btnChangeLanguage: ImageButton
+    private lateinit var btnTienda: ImageButton
+    private lateinit var btnPlanes: ImageButton
+    private lateinit var btnTorneos: ImageButton
+    private lateinit var btnPanelAdmin: MaterialButton
+    private lateinit var btnCerrarSesion: MaterialButton
+
+    // BOTONES DE REDES SOCIALES
+    private lateinit var btnInstagram: ImageButton
+    private lateinit var btnFacebook: ImageButton
+    private lateinit var btnWhatsapp: ImageButton
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,15 +45,14 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        // Este bloque de 'WindowInsetsListener' a veces causa problemas de layout si no se usa a fondo.
-        // Si notas que tus botones o vistas se mueven a lugares extraños, puedes comentar o eliminar este bloque.
+        // Listener para los márgenes del sistema
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        // --- TU CÓDIGO EXISTENTE (SIN CAMBIOS) ---
+        // --- VERIFICACIÓN DE USUARIO (SIN CAMBIOS) ---
         if (intent.hasExtra("usuario")) {
             usuario = intent.getParcelableExtra("usuario")!!
         } else {
@@ -50,22 +61,32 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
+        // CONFIGURACIÓN DE GESTORES (SIN CAMBIOS)
         CarritoManager.configurarUsuario(usuario.correo) { _, _ -> }
         FavoritosManager.configurarUsuario(usuario.correo) { _, _ -> }
 
-        val btnTienda: ImageButton = findViewById(R.id.btnTienda)
-        val btnPlanes: ImageButton = findViewById(R.id.btnPlanes)
-        val btnTorneos: ImageButton = findViewById(R.id.btnTorneo)
-        val btnPanelAdmin: MaterialButton = findViewById(R.id.btnPanelAdmin)
-        val btnCerrarSesion: MaterialButton = findViewById(R.id.btnCerrarSesion)
-
-        // 4. INICIALIZA EL BOTÓN DE IDIOMA Y ASÍGNALE SU FUNCIÓN
+        // --- INICIALIZACIÓN DE TODAS LAS VISTAS ---
+        btnTienda = findViewById(R.id.btnTienda)
+        btnPlanes = findViewById(R.id.btnPlanes)
+        btnTorneos = findViewById(R.id.btnTorneo)
+        btnPanelAdmin = findViewById(R.id.btnPanelAdmin)
+        btnCerrarSesion = findViewById(R.id.btnCerrarSesion)
         btnChangeLanguage = findViewById(R.id.btnChangeLanguage)
+
+        // INICIALIZACIÓN DE BOTONES DE REDES SOCIALES
+        btnInstagram = findViewById(R.id.iconInstagram)
+        btnFacebook = findViewById(R.id.iconFacebook)
+        btnWhatsapp = findViewById(R.id.iconWhatsapp)
+
+
+        // --- CONFIGURACIÓN DE LISTENERS ---
+
+        // Listener de idioma
         btnChangeLanguage.setOnClickListener {
             showChangeLanguageDialog()
         }
 
-        // --- TU CÓDIGO EXISTENTE (SIN CAMBIOS) ---
+        // Listeners de navegación principal
         btnTienda.setOnClickListener {
             val intent = Intent(this, Tienda::class.java)
             intent.putExtra("usuario", usuario)
@@ -84,6 +105,25 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Listeners de redes sociales (MOVIDOS AQUÍ DENTRO DE ONCREATE)
+        btnInstagram.setOnClickListener {
+            // URL actualizada para que no de error de contenido no disponible
+            val url = "https://www.instagram.com/barracudabbh/"
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        }
+
+        btnFacebook.setOnClickListener {
+            val url = "https://www.facebook.com/barracudaboxing/"
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        }
+
+        btnWhatsapp.setOnClickListener {
+            val numeroWhatsapp = "527866880131"
+            val url = "https://api.whatsapp.com/send?phone=$numeroWhatsapp"
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+        }
+
+        // Lógica de visibilidad del panel de admin
         if (usuario.rol == "admin") {
             btnPanelAdmin.visibility = View.VISIBLE
         } else {
@@ -95,6 +135,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Listener para cerrar sesión
         btnCerrarSesion.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             CarritoManager.limpiarSesion()
@@ -107,7 +148,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // 5. AÑADE LAS TRES FUNCIONES DE IDIOMA (CASI IDÉNTICAS A LAS DE LOGIN.KT)
+    // --- FUNCIONES DE IDIOMA (SIN CAMBIOS) ---
     private fun showChangeLanguageDialog() {
         val languages = arrayOf("Español", "English")
         val builder = AlertDialog.Builder(this)
@@ -122,7 +163,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setLocale(langCode: String) {
-        // Guarda la preferencia de idioma para que la app la recuerde
         val prefs = getSharedPreferences("Settings", MODE_PRIVATE)
         val editor = prefs.edit()
         editor.putString("My_Lang", langCode)
@@ -130,18 +170,14 @@ class MainActivity : AppCompatActivity() {
 
         // Recarga la actividad para que se apliquen los cambios
         val intent = Intent(this, MainActivity::class.java)
-
-        // ¡¡MUY IMPORTANTE!! Volvemos a pasar el objeto 'usuario' a la actividad
-        // recargada para no perder la sesión del usuario actual.
+        // Volvemos a pasar el objeto 'usuario' para no perder la sesión
         intent.putExtra("usuario", usuario)
-
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
         finish()
     }
 
     private fun loadLocale() {
-        // Carga la preferencia de idioma que guardamos antes
         val prefs = getSharedPreferences("Settings", MODE_PRIVATE)
         val language = prefs.getString("My_Lang", "") ?: ""
 

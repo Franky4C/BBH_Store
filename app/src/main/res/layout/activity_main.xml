@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- =============================================================== -->
-<!-- ==== 1. CAMBIO PRINCIPAL: El nuevo contenedor raíz es un RelativeLayout ==== -->
-<!-- Esto nos permite poner el botón de idioma "flotando" en la esquina, -->
-<!-- y mantener tu ScrollView original intacto debajo.                -->
-<!-- =============================================================== -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -169,6 +163,33 @@
                     android:textStyle="bold" />
             </RelativeLayout>
 
+
+            <!-- =========================================== -->
+            <!-- ==== NUEVA SECCIÓN: ¿QUIÉNES SOMOS? ==== -->
+            <!-- =========================================== -->
+            <TextView
+                android:id="@+id/txtQuienesSomosTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="32dp"
+                android:text="@string/main_about_us_title"
+                android:textColor="#8AFF8E"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtQuienesSomosResumen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:lineSpacingExtra="6dp"
+                android:text="@string/main_about_us_summary"
+                android:textColor="#A8A8A8"
+                android:textSize="16sp" />
+
+
             <!-- Horarios (AHORA USA @string) -->
             <TextView
                 android:id="@+id/txtHorarios"
@@ -204,7 +225,9 @@
                 android:textSize="25dp"
                 android:textStyle="bold" />
 
-            <!-- Redes Sociales (sin cambios en estructura, solo en IDs si es necesario) -->
+            <!-- =========================================== -->
+            <!-- ====    ICONOS DE REDES SOCIALES MEJORADOS   ==== -->
+            <!-- =========================================== -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -213,37 +236,39 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
+                <!-- CAMBIO 1: Tamaño reducido a 48dp -->
+                <!-- CAMBIO 2: Fondo cambiado a '?attr/selectableItemBackgroundBorderless' para efecto ripple sin fondo sólido -->
                 <ImageButton
                     android:id="@+id/iconInstagram"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:background="@drawable/bg_social_icon"
+                    android:layout_width="78dp"
+                    android:layout_height="78dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="Instagram"
-                    android:padding="8dp"
-                    android:alpha="0.9"
+                    android:padding="1dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/instagran_logo" />
 
                 <ImageButton
                     android:id="@+id/iconFacebook"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
-                    android:background="@drawable/bg_social_icon"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="Facebook"
-                    android:padding="8dp"
-                    android:alpha="0.9"
+                    android:padding="2dp"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/facebool" />
 
                 <ImageButton
                     android:id="@+id/iconWhatsapp"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:background="@drawable/bg_social_icon"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="Whatsapp"
-                    android:padding="8dp"
-                    android:alpha="0.9"
-                    android:src="@drawable/whatsapp_tile_logo_icon_169898" />
+                    android:padding="4dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/whatsapp_logo" />
             </LinearLayout>
 
             <!-- Botón Panel Admin (AHORA USA @string) -->

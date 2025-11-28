@@ -208,7 +208,7 @@
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="WhatsApp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/whatsapp_tile_logo_icon_169898"
+                    android:src="@drawable/whatsapp_logo"
                     app:tint="#C5C3C3"/>
             </LinearLayout>
         </LinearLayout>

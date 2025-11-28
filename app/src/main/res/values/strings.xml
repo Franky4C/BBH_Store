@@ -18,6 +18,8 @@
     <string name="hint03">Nombre</string>
     <string name="hint04">Apellido Paterno</string>
     <string name="hint05">Apellido Materno</string>
+    <string name="main_about_us_title">¿Quiénes Somos?</string>
+    <string name="main_about_us_summary">Somos un gym de boxeo que forma campeones para la vida. Con disciplina, pasión y respeto, promovemos el crecimiento integral (físico, mental y espiritual) para que cada miembro se convierta en un líder dentro y fuera del ring, listo para enfrentar las batallas diarias.</string>
 
     <!-- ============================================= -->
     <!-- ==== STRINGS PARA ACTIVITY_MAIN ==== -->
