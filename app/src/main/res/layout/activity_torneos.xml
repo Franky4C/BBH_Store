@@ -71,6 +71,6 @@
         android:padding="8dp"
         android:scaleType="fitCenter"
         android:src="@drawable/translation"
-        app:tint="@android:color/white" />
+ />
 
 </RelativeLayout>

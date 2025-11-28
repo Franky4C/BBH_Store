@@ -95,14 +95,14 @@
                 android:id="@+id/btnChangeLanguage"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="1dp"
                 android:layout_marginEnd="16dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Change Language"
                 android:padding="8dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/translation"
-                app:tint="@android:color/white" />
+                 />
 
         </LinearLayout>
 

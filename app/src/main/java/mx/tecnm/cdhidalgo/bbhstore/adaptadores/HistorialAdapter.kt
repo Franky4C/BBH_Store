@@ -49,7 +49,7 @@ class HistorialAdapter(
         holder.txtTotal.text = "Total: $" + String.format("%.2f", orden.total)
 
         val numItems = orden.items.sumOf { it.cantidad }
-        holder.txtItems.text = "$numItems artículos"
+        holder.txtItems.text = "$numItems articulos"
 
         holder.itemView.setOnClickListener {
             onOrdenClick?.invoke(orden)

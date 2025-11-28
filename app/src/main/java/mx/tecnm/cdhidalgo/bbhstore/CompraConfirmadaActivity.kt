@@ -11,8 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.zxing.BarcodeFormat
+import com.google.zxing.EncodeHintType
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.common.BitMatrix
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -25,7 +27,7 @@ class CompraConfirmadaActivity : AppCompatActivity() {
     private lateinit var txtFecha: TextView
     private lateinit var txtResumen: TextView
     private lateinit var btnVolverTienda: Button
-    private lateinit var imgQr: ImageView      // NUEVO
+    private lateinit var imgQr: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,80 +40,96 @@ class CompraConfirmadaActivity : AppCompatActivity() {
             insets
         }
 
-        // Referencias UI
-        txtIdCompra   = findViewById(R.id.txt_id_compra)
-        txtTotal      = findViewById(R.id.txt_total_compra)
-        txtCorreo     = findViewById(R.id.txt_correo_compra)
-        txtFecha      = findViewById(R.id.txt_fecha_compra)
-        txtResumen    = findViewById(R.id.txt_resumen_compra)
+        txtIdCompra     = findViewById(R.id.txt_id_compra)
+        txtTotal        = findViewById(R.id.txt_total_compra)
+        txtCorreo       = findViewById(R.id.txt_correo_compra)
+        txtFecha        = findViewById(R.id.txt_fecha_compra)
+        txtResumen      = findViewById(R.id.txt_resumen_compra)
         btnVolverTienda = findViewById(R.id.btn_volver_tienda)
-        imgQr         = findViewById(R.id.img_qr_compra)   // NUEVO
+        imgQr           = findViewById(R.id.img_qr_compra)
 
 
-        // Datos que vienen del Intent
+        // Datos del Intent
         val idCompra    = intent.getStringExtra("orden_id") ?: "SIN-ID"
         val total       = intent.getDoubleExtra("orden_total", 0.0)
         val correo      = intent.getStringExtra("orden_correo") ?: "Desconocido"
         val fechaMillis = intent.getLongExtra("orden_fecha", 0L)
-        val resumen     = intent.getStringExtra("orden_resumen") ?: "Sin detalle de productos."
+        val resumen     = intent.getStringExtra("orden_resumen") ?: "Sin detalle."
 
-        // Mostrar datos
-        txtIdCompra.text = idCompra
-        txtTotal.text = "$" + String.format("%.2f", total)
-        txtCorreo.text = "Comprador: $correo"
-
-        if (fechaMillis > 0L) {
-            val formato = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-            txtFecha.text = "Fecha: ${formato.format(Date(fechaMillis))}"
+        val fechaFormateada = if (fechaMillis > 0L) {
+            SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+                .format(Date(fechaMillis))
         } else {
-            txtFecha.text = "Fecha: -"
+            "-"
         }
 
-        txtResumen.text = resumen
+        // Mostrar datos en pantalla
+        txtIdCompra.text   = idCompra
+        txtTotal.text      = "$" + String.format("%.2f", total)
+        txtCorreo.text     = "Comprador: $correo"
+        txtFecha.text      = "Fecha: $fechaFormateada"
+        txtResumen.text    = resumen
 
-        generarQrParaCompra(idCompra)
 
-        // Volver a la tienda
+        // 🔥 Construir contenido completo para el QR
+        val contenidoQR = buildString {
+            append("🧾 ORDEN DE COMPRA\n")
+            append("ID: $idCompra\n")
+            append("Cliente: $correo\n")
+            append("Fecha: $fechaFormateada\n")
+            append("--------------------------\n")
+            append("Artículos:\n")
+            resumen.split("\n").forEach {
+                append("- $it\n")
+            }
+            append("--------------------------\n")
+            append("TOTAL: $${String.format("%.2f", total)}\n")
+        }
+
+        generarQrParaCompra(contenidoQR)
+
+
         btnVolverTienda.setOnClickListener {
-            finish()   // regresar a la Tienda que ya estaba abierta
+            finish()
         }
-
     }
 
-    // NUEVO: función para generar el QR
+
+    // GENERAR QR CON TODOS LOS DETALLES
     private fun generarQrParaCompra(texto: String) {
         try {
-            val size = 512  // tamaño del QR en píxeles
+            val size = 900
+
+            // Para soportar UTF-8, emojis y texto extenso
+            val hints = mapOf(
+                EncodeHintType.ERROR_CORRECTION to ErrorCorrectionLevel.M,
+                EncodeHintType.CHARACTER_SET to "UTF-8"
+            )
+
             val bitMatrix: BitMatrix = MultiFormatWriter().encode(
                 texto,
                 BarcodeFormat.QR_CODE,
                 size,
                 size,
-                null
+                hints
             )
 
             val width = bitMatrix.width
             val height = bitMatrix.height
-            val pixels = IntArray(width * height)
+            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
 
             for (y in 0 until height) {
-                val offset = y * width
                 for (x in 0 until width) {
-                    pixels[offset + x] = if (bitMatrix.get(x, y)) {
-                        0xFF000000.toInt() // negro
-                    } else {
-                        0xFFFFFFFF.toInt() // blanco
-                    }
+                    bitmap.setPixel(
+                        x, y,
+                        if (bitMatrix.get(x, y)) 0xFF000000.toInt() else 0xFFFFFFFF.toInt()
+                    )
                 }
             }
-
-            val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            bitmap.setPixels(pixels, 0, width, 0, 0, width, height)
 
             imgQr.setImageBitmap(bitmap)
         } catch (e: Exception) {
             e.printStackTrace()
-            // si hay error, simplemente dejamos el ImageView vacío
         }
     }
 }
